@@ -1,0 +1,61 @@
+
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div id="content-main">
+    <p>Select an active question set from the source database.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <fieldset class="module aligned">
+            <div class="form-row">
+                <label for="source_set_id">Question set:</label>
+                <select name="source_set_id" id="source_set_id" required>
+                    <option value="">Select a question set</option>
+                    {% for item in question_sets %}
+                    <option value="{{ item.id }}">
+                        {{ item.title }}{% if item.category %} — {{ item.category }}{% endif %}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="exam_date">Exam date:</label>
+                <input
+                    type="date"
+                    name="exam_date"
+                    id="exam_date"
+                    value="{{ exam_date }}"
+                    required
+                >
+            </div>
+
+            <div class="form-row">
+                <label for="duration">Duration (minutes):</label>
+                <input
+                    type="number"
+                    name="duration"
+                    id="duration"
+                    min="1"
+                    max="300"
+                    value="{{ duration }}"
+                    required
+                >
+            </div>
+        </fieldset>
+
+        <div class="submit-row">
+            <input type="submit" value="Import Question Set" class="default">
+            <a href="{% url 'admin:exams_dailyexam_changelist' %}">
+                Cancel
+            </a>
+        </div>
+    </form>
+
+    {% if not question_sets %}
+    <p>No active source question sets were found.</p>
+    {% endif %}
+</div>
+{% endblock %}

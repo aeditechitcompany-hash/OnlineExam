@@ -246,6 +246,41 @@ def save_answer(request, attempt_id):
 
 
 @login_required
+def exam_home(request):
+    if request.user.is_staff:
+        return redirect("admin:index")
+
+    today = timezone.localdate()
+
+    daily_exams = DailyExam.objects.filter(
+        exam_date=today,
+        is_published=True,
+    ).order_by("id")
+
+    exam_cards = []
+
+    for daily_exam in daily_exams:
+        attempt = ExamAttempt.objects.filter(
+            daily_exam=daily_exam,
+            student=request.user,
+        ).first()
+
+        exam_cards.append({
+            "daily_exam": daily_exam,
+            "attempt": attempt,
+        })
+
+    return render(
+        request,
+        "exams/home.html",
+        {
+            "exam_cards": exam_cards,
+            "today": today,
+        },
+    )
+
+
+@login_required
 def exam_instructions(request, exam_id):
     if request.user.is_staff:
         return redirect("admin:index")

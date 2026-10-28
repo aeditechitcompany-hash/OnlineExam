@@ -29,6 +29,12 @@ class Command(BaseCommand):
             default=None,
             help="Optional local ExamUser ID for the exam creator.",
         )
+        parser.add_argument(
+            "--duration",
+            type=int,
+            default=50,
+            help="Exam duration in minutes (1–300). Defaults to 50.",
+        )
 
     def handle(self, *args, **options):
         try:
@@ -38,6 +44,10 @@ class Command(BaseCommand):
 
         exam_date = options["date"] or timezone.localdate()
         created_by_id = options["created_by"]
+        duration = options["duration"]
+
+        if not 1 <= duration <= 300:
+            raise CommandError("Duration must be between 1 and 300 minutes.")
 
         # Read the source set and its questions/options without modifying it.
         source = connections["source_mcq"]
@@ -133,13 +143,62 @@ class Command(BaseCommand):
 
         # All writes happen only on the new project's default database.
         with transaction.atomic(using="default"):
-            if DailyExam.objects.using("default").filter(
-                exam_date=exam_date
-            ).exists():
-                raise CommandError(
-                    f"An exam already exists for {exam_date}. "
-                    "Nothing was changed. Choose another date or review the "
-                    "existing exam in Django admin."
+            exam = (
+                DailyExam.objects.using("default")
+                .filter(
+                    source_set_id=source_set_id,
+                    exam_date=exam_date,
+                )
+                .first()
+            )
+
+            # Repair the known legacy Set 1 record if its UUID was not saved.
+            if (
+                exam is None
+                and source_set_id == "cc3e88d1-f185-4360-8349-5ffdddcf3944"
+            ):
+                legacy_exam = (
+                    DailyExam.objects.using("default")
+                    .filter(pk=2, exam_date=exam_date, title="Set 1")
+                    .first()
+                )
+
+                if legacy_exam and not ExamQuestion.objects.using("default").filter(
+                    daily_exam=legacy_exam
+                ).exists():
+                    exam = legacy_exam
+
+            if exam:
+                existing_questions = ExamQuestion.objects.using("default").filter(
+                    daily_exam=exam
+                ).count()
+
+                if existing_questions:
+                    raise CommandError(
+                        f"Exam '{exam.title}' already has {existing_questions} "
+                        "questions. Nothing was changed."
+                    )
+
+                # Repair an existing empty exam instead of creating a duplicate.
+                exam.title = title
+                exam.duration_minutes = duration
+                exam.total_questions = len(questions)
+                exam.is_published = False
+                exam.source_set_id = source_set_id
+                exam.source_category = category or ""
+                exam.source_description = description or ""
+                exam.save(using="default")
+            else:
+                exam = DailyExam.objects.using("default").create(
+                    title=title,
+                    exam_date=exam_date,
+                    duration_minutes=duration,
+                    total_questions=len(questions),
+                    is_published=False,
+                    source_set_id=source_set_id,
+                    source_category=category or "",
+                    source_description=description or "",
+                    created_by=None,
                 )
 
             created_by = None
@@ -156,17 +215,6 @@ class Command(BaseCommand):
                         f"Local user ID {created_by_id} does not exist."
                     ) from exc
 
-            exam = DailyExam.objects.using("default").create(
-                title=title,
-                exam_date=exam_date,
-                duration_minutes=50,
-                total_questions=len(questions),
-                is_published=False,
-                source_set_id=str(set_id),
-                source_category=category or "",
-                source_description=description or "",
-                created_by=created_by,
-            )
 
             for question_id, qtype, text, image, audio, explanation, points, order, section_name in questions:
                 exam_question = ExamQuestion.objects.using("default").create(
@@ -199,7 +247,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(
             f"Imported '{title}' for {exam_date}.\n"
             f"Questions: {len(questions)}\n"
-            f"Duration: 50 minutes\n"
+            f"Duration: {duration} minutes\n"
             f"Published: No (review before publishing)\n"
             f"Local exam ID: {exam.pk}"
         ))

@@ -1,58 +1,54 @@
-
+```django
 {% extends "base.html" %}
-
-{% block title %}Daily Exam{% endblock %}
+{% block title %}Daily Exams{% endblock %}
 
 {% block content %}
 <div class="card">
-    <h1>Daily Online Exam</h1>
+    <h1>Today's Online Exams</h1>
     <p>Today's date: {{ today|date:"F j, Y" }}</p>
 
-    {% if daily_exam %}
-        <h2>{{ daily_exam.title }}</h2>
+    {% if exam_cards %}
+        {% for item in exam_cards %}
+            <div class="card">
+                <h2>{{ item.daily_exam.title }}</h2>
 
-        <p>
-            <strong>Duration:</strong>
-            {{ daily_exam.duration_minutes }} minutes
-        </p>
-        <p>
-            <strong>Questions:</strong>
-            {{ daily_exam.total_questions }}
-        </p>
+                <p><strong>Duration:</strong>
+                    {{ item.daily_exam.duration_minutes }} minutes
+                </p>
+                <p><strong>Questions:</strong>
+                    {{ item.daily_exam.total_questions }}
+                </p>
 
-        {% if attempt %}
-            {% if attempt.is_submitted %}
-                <p>You have already completed today's exam.</p>
-                <p>
-                    <a href="{% url 'exam-result' attempt_id=attempt.pk %}">
-                        View your result
+                {% if item.attempt %}
+                    {% if item.attempt.is_submitted %}
+                        <p>You have completed this exam.</p>
+                        <p>
+                            <a href="{% url 'exam-result' attempt_id=item.attempt.pk %}">
+                                View your result
+                            </a>
+                        </p>
+                    {% else %}
+                        <p>You have already started this exam.</p>
+                        <p>The timer continues from your original start time.</p>
+                        <p>
+                            <a href="{% url 'take-exam' attempt_id=item.attempt.pk %}">
+                                Continue exam
+                            </a>
+                        </p>
+                    {% endif %}
+                {% else %}
+                    <p>You can attempt this exam only once. Your timer starts when you begin.</p>
+                    <a class="button"
+                       href="{% url 'exam-instructions' exam_id=item.daily_exam.pk %}">
+                        Start Exam
                     </a>
-                </p>
-            {% else %}
-                <p>You have already started today's exam.</p>
-                <p>
-                    The timer continues from your original start time.
-                </p>
-                <p>
-                    <a href="{% url 'take-exam' attempt_id=attempt.pk %}">
-                        Continue exam
-                    </a>
-                </p>
-            {% endif %}
-        {% else %}
-            <p>
-                You can attempt this exam only once.
-                Your timer starts when you begin.
-            </p>
-
-            <a class="button"
-                href="{% url 'exam-instructions' exam_id=daily_exam.pk %}">
-                    Start Exam
-            </a>
-        {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
     {% else %}
-        <p>No exam has been published for today yet.</p>
+        <p>No exams have been published for today yet.</p>
         <p>Please check again later.</p>
     {% endif %}
 </div>
 {% endblock %}
+```

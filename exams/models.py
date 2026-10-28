@@ -5,7 +5,7 @@ from django.db import models
 
 class DailyExam(models.Model):
     title = models.CharField(max_length=200)
-    exam_date = models.DateField(unique=True, db_index=True)
+    exam_date = models.DateField(db_index=True)
     duration_minutes = models.PositiveSmallIntegerField(default=50)
     total_questions = models.PositiveIntegerField(default=0)
     is_published = models.BooleanField(default=False)
