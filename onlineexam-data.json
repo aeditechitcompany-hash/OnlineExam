@@ -1,0 +1,2648 @@
+[
+{
+  "model": "accounts.examuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$1em4JlFTMfM3RRn8IaWBgL$QWe2W1zK8fyHRXXU0V40GFxlSoevyQdRCdLQbaSG9ys=",
+    "last_login": "2026-10-28T12:44:53.771Z",
+    "is_superuser": true,
+    "username": "Aayush",
+    "first_name": "",
+    "last_name": "",
+    "email": "ab9531288@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-10-27T13:48:42.558Z",
+    "phone_number": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.examuser",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$9B1WXN3O55q1wB7vsGSEiE$VRyaFSx6aRTr3fP/shvLStIN2oxEA6lOOE7qmAbGipI=",
+    "last_login": "2026-10-28T14:17:32.998Z",
+    "is_superuser": false,
+    "username": "aayush123",
+    "first_name": "Aayush",
+    "last_name": "Bhujel",
+    "email": "bhujelaayush47@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-28T06:33:41.125Z",
+    "phone_number": "9808078901",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "exams.dailyexam",
+  "pk": 1,
+  "fields": {
+    "title": "Set 39",
+    "exam_date": "2026-10-28",
+    "duration_minutes": 50,
+    "total_questions": 40,
+    "is_published": true,
+    "source_set_id": "2ef33d3a-da16-40c7-a2a3-be3ca7d434f6",
+    "source_category": "others",
+    "source_description": "",
+    "created_by": 1,
+    "created_at": "2026-10-28T05:51:18.443Z"
+  }
+},
+{
+  "model": "exams.dailyexam",
+  "pk": 2,
+  "fields": {
+    "title": "Set 1",
+    "exam_date": "2026-10-29",
+    "duration_minutes": 50,
+    "total_questions": 40,
+    "is_published": true,
+    "source_set_id": "1",
+    "source_category": "",
+    "source_description": "",
+    "created_by": 1,
+    "created_at": "2026-10-28T13:49:59.582Z"
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 1,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1411",
+    "question_type": "image",
+    "question_text": "빈칸에 들어갈 가장 알맞은 것을 고르십시오.",
+    "image_url": "mcq/questions/images/Screenshot_2026-10-24_113537_ds7awg",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 1
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 2,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1412",
+    "question_type": "text",
+    "question_text": "빈칸에 들어갈 가장 알맞은 것을 고르십시오.\r\n\r\n우유를 그냥 차갑게 마시는 것보다 조금만______________마시면 속이 편해요.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 2
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 3,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1413",
+    "question_type": "text",
+    "question_text": "빈칸에 들어갈 가장 알맞은 것을 고르십시오.\r\n\r\n축사는 물청소를 한 후에_______________. 일주일에 한번씩 곤충, 바이러스를 죽가축들이 병에 걸리지않습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 3
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 4,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1414",
+    "question_type": "text",
+    "question_text": "빈칸에 들어갈 가장 알맞은 것을 고르십시오.\r\n\r\n도장을 마친 선체 표면에 균열이 생기면 금이 간 부분을_____________도장해야 합니다.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 4
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 5,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1415",
+    "question_type": "text",
+    "question_text": "빈칸에 들어갈 가장 알맞은 것을 고르십시오.\r\n\r\n이 전에 같이 다니던 회사 동료 마두 씨가 다음 주에 고향으로______________했어요. 그래서 어제 마두 씨를 만나러 갔다 왔어요.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 5
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 6,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1416",
+    "question_type": "text",
+    "question_text": "빈칸에 들어갈 가장 알맞은 것을 고르십시오.\r\n\r\n염색 작업을 할 때 원단이 엉키면 염색이 잘되지 않습니다. 그래서 막대기로____________원단을 펴 줘야 합니다.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 6
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 7,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1417",
+    "question_type": "text",
+    "question_text": "다음 중 밑출 친 부분이 맞는 문장을 고르십시오.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 7
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 8,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1418",
+    "question_type": "text",
+    "question_text": "다음 중 밑출 친 부분이 맞는 문장을 고르십시오.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 8
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 9,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1419",
+    "question_type": "text",
+    "question_text": "다음 단어와 비슷한 것은 무엇입니까?\r\n 손보다",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 9
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 10,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1420",
+    "question_type": "text",
+    "question_text": "다음 단어와 관계있는 것은 무엇입니까?\r\n 사과,배,귤",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 10
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 11,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1421",
+    "question_type": "image",
+    "question_text": "다음 작업을 순서대로 고르십시오.",
+    "image_url": "mcq/questions/images/Screenshot_2026-10-24_113607_ocrxdp",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 11
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 12,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1423",
+    "question_type": "text",
+    "question_text": "다음 글을 일고 무엇에 대한 글인지 고르십시오.\r\n\r\n어제 몸이 아파서 병원에 갔습니다. 간호사에게 증상을 말한후, 순서를 기다려서 의사 선생님을 만났습니다. 의사 선생님은 약을 처방해 주시고, 푹 쉬라고 하셨습니다",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 12
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 13,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1424",
+    "question_type": "text",
+    "question_text": "다음 글을 일고 무엇에 대한 글인지 고르십시오.\r\n\r\n저는 아침 일찍 일어나서 공원에 갑니다. 공원에는 산책하는 사람, 운동하는 사람, 강아지를 데리고 나온 사람들이 많습니다. 저는 공원을 한 바퀴 천천히 걷습니다. 걷는 동안 신선한 공기를 마시고, 새 소리도 들을 수 있어서 기분이 아주 좋습니다. 요즘은 건강을 위해 매일 아침 산책을 하고 있는 덕분에 하루를 활기차게 시작할 수 있습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 13
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 14,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1425",
+    "question_type": "image",
+    "question_text": "다음 그래프에 대한 설명으로 가장 알맞은 것을 고르십시오.",
+    "image_url": "mcq/questions/images/Screenshot_2026-10-24_113632_uoipqh",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 14
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 15,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1426",
+    "question_type": "text",
+    "question_text": "다음을 읽고 내용과 같은 것을 고르십시오.\r\n\r\n한국인은 다양한 육류를 즐기며, 돼지고기, 닭고기, 소고기 순으로 육류를 소비합니다. 한국인의 육류 소비량은 예전에 비해 크게 늘었습니다. 2023년에 처음으로 1인당 60kg을 넘어섰는데, 이는 1인당 쌀 소비량인 56.4kg 보다 많습니다. 그러나 최근에는 건강과 환경 문제에 대한 관심이 증가하면서 채식을 하거나 육류 소비를 줄이는 사람들이 늘고 있습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 15
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 16,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1427",
+    "question_type": "image",
+    "question_text": "다음 그림을 보고 맞는 단어나 문장을 고르십시오.",
+    "image_url": "mcq/questions/images/Screenshot_2026-10-24_113653_o26yrj",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 16
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 17,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1428",
+    "question_type": "image",
+    "question_text": "다음 그림을 보고 맞는 단어나 문장을 고르십시오.",
+    "image_url": "mcq/questions/images/Screenshot_2026-10-24_113704_tr7seq",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 17
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 18,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1429",
+    "question_type": "image",
+    "question_text": "다음 그림을 보고 맞는 단어나 문장을 고르십시오.\r\n 고소하다",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 18
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 19,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1430",
+    "question_type": "image",
+    "question_text": "다음 그림을 보고 맞는 단어나 문장을 고르십시오.",
+    "image_url": "mcq/questions/images/Screenshot_2026-10-24_115257_emj7yq",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 19
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 20,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1431",
+    "question_type": "text",
+    "question_text": "다음 설명으로 맞는 어휘를 고르십시오.\r\n\r\n돼지를 기르는 곳을 뜻합니다. 주로 고기를 생산하기 위해 돼지를 사육하며, 이 과정에서 사료와 관리가 중요합니다.",
+    "image_url": "",
+    "audio_url": "",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 20
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 21,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1432",
+    "question_type": "audio",
+    "question_text": "다음을 듣고 들은 것을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/21_eqaswr",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 21
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 22,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1433",
+    "question_type": "audio",
+    "question_text": "다음을 듣고 들은 것을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/22_ayckit",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 22
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 23,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1434",
+    "question_type": "image_audio",
+    "question_text": "다음을 듣고 들은 내용과 관계있는 그림을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/23_mgd9nd",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 23
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 24,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1435",
+    "question_type": "image_audio",
+    "question_text": "다음을 듣고 들은 내용과 관계있는 그림을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/24_slekyi",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 24
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 25,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1436",
+    "question_type": "image_audio",
+    "question_text": "다음을 듣고 들은 내용과 관계있는 그림을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/25_sl1ius",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 25
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 26,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1437",
+    "question_type": "image_audio",
+    "question_text": "다음을 듣고 들은 내용과 관계있는 그림을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/26_c8dmet",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 26
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 27,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1438",
+    "question_type": "image_audio",
+    "question_text": "다음을 듣고 들은 내용과 관계있는 그림을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/27_veu1oa",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 27
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 28,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1439",
+    "question_type": "image_audio",
+    "question_text": "다음을 듣고 들은 내용과 관계있는 그림을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/28_dpyxlz",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 28
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 29,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1440",
+    "question_type": "audio",
+    "question_text": "다음을 듣고 물음에 알맞은 대답을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/29Q_vujx9k",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 29
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 30,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1441",
+    "question_type": "audio",
+    "question_text": "다음을 듣고 물음에 알맞은 대답을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/30Q_nlilfb",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 30
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 31,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1442",
+    "question_type": "audio",
+    "question_text": "다음을 듣고 물음에 알맞은 대답을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/31Q_cykgif",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 31
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 32,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1443",
+    "question_type": "text",
+    "question_text": "다음을 듣고 물음에 알맞은 대답을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/32Q_tdeky1",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 32
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 33,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1444",
+    "question_type": "audio",
+    "question_text": "다음을 듣고 이어지는 말로 가장 알맞은 것을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/33Q_v3l75t",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 33
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 34,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1445",
+    "question_type": "audio",
+    "question_text": "다음을 듣고 이어지는 말로 가장 알맞은 것을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/34Q_lhxb0p",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 34
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 35,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1446",
+    "question_type": "image_audio",
+    "question_text": "다음을 듣고 들은 내용과 관계있는 그림을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/35_e2duxi",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 35
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 36,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1447",
+    "question_type": "image_audio",
+    "question_text": "다음을 듣고 들은 내용과 관계있는 그림을 고르십시오.",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/36_qmt1pd",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 36
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 37,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1448",
+    "question_type": "image_audio",
+    "question_text": "수의소는 어디에 있습니까?",
+    "image_url": "mcq/questions/images/Screenshot_2026-10-24_132354_lup16h",
+    "audio_url": "mcq/questions/audio/37Q_yv9ntn",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 37
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 38,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1449",
+    "question_type": "audio",
+    "question_text": "들은 내용과 같은 것은 무엇입니까?",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/38_xuafry",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 38
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 39,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1450",
+    "question_type": "audio",
+    "question_text": "들은 내용과 같은 것은 무엇입니까?",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/39_wouywa",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 39
+  }
+},
+{
+  "model": "exams.examquestion",
+  "pk": 40,
+  "fields": {
+    "daily_exam": 1,
+    "source_question_id": "1451",
+    "question_type": "audio",
+    "question_text": "두 사람은 무엇에 대해 말하고 있습니까?",
+    "image_url": "",
+    "audio_url": "mcq/questions/audio/40_dzf6hd",
+    "explanation": "",
+    "points": 1,
+    "section_name": "",
+    "order": 40
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 1,
+  "fields": {
+    "question": 1,
+    "option_text": "적다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 2,
+  "fields": {
+    "question": 1,
+    "option_text": "많다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 3,
+  "fields": {
+    "question": 1,
+    "option_text": "하다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 4,
+  "fields": {
+    "question": 1,
+    "option_text": "타다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 5,
+  "fields": {
+    "question": 2,
+    "option_text": "막혀서",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 6,
+  "fields": {
+    "question": 2,
+    "option_text": "팔아서",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 7,
+  "fields": {
+    "question": 2,
+    "option_text": "데워서",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 8,
+  "fields": {
+    "question": 2,
+    "option_text": "짜서",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 9,
+  "fields": {
+    "question": 3,
+    "option_text": "세척합니다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 10,
+  "fields": {
+    "question": 3,
+    "option_text": "우방을 말립니다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 11,
+  "fields": {
+    "question": 3,
+    "option_text": "톱밥을 깝니다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 12,
+  "fields": {
+    "question": 3,
+    "option_text": "소독을 합나다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 13,
+  "fields": {
+    "question": 4,
+    "option_text": "먼저",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 14,
+  "fields": {
+    "question": 4,
+    "option_text": "아직",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 15,
+  "fields": {
+    "question": 4,
+    "option_text": "항상",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 16,
+  "fields": {
+    "question": 4,
+    "option_text": "다시",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 17,
+  "fields": {
+    "question": 5,
+    "option_text": "돌아간다고",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 18,
+  "fields": {
+    "question": 5,
+    "option_text": "돌아가자고",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 19,
+  "fields": {
+    "question": 5,
+    "option_text": "돌아가냐고",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 20,
+  "fields": {
+    "question": 5,
+    "option_text": "돌아가자고",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 21,
+  "fields": {
+    "question": 6,
+    "option_text": "조절해서",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 22,
+  "fields": {
+    "question": 6,
+    "option_text": "저어서",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 23,
+  "fields": {
+    "question": 6,
+    "option_text": "쌓아서",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 24,
+  "fields": {
+    "question": 6,
+    "option_text": "건조시켜",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 25,
+  "fields": {
+    "question": 7,
+    "option_text": "아이가 아파면 소아과에 가 보세요.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 26,
+  "fields": {
+    "question": 7,
+    "option_text": "날씨가 없으면 에어컨을 켜세요.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 27,
+  "fields": {
+    "question": 7,
+    "option_text": "음악을 들으면 기분이 좋아요.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 28,
+  "fields": {
+    "question": 7,
+    "option_text": "아침에 공원에서 걸면 건강이 좋아져요.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 29,
+  "fields": {
+    "question": 8,
+    "option_text": "오늘 안전 교육을 듣으십시오.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 30,
+  "fields": {
+    "question": 8,
+    "option_text": "상자를 저울 위에 놓십시오.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 31,
+  "fields": {
+    "question": 8,
+    "option_text": "우표를 봉투에 만들으십시오.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 32,
+  "fields": {
+    "question": 8,
+    "option_text": "이 전화번호로 전화를 거십시오.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 33,
+  "fields": {
+    "question": 9,
+    "option_text": "수리하다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 34,
+  "fields": {
+    "question": 9,
+    "option_text": "세척하다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 35,
+  "fields": {
+    "question": 9,
+    "option_text": "아쉽다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 36,
+  "fields": {
+    "question": 9,
+    "option_text": "빠르다",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 37,
+  "fields": {
+    "question": 10,
+    "option_text": "야채",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 38,
+  "fields": {
+    "question": 10,
+    "option_text": "과일",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 39,
+  "fields": {
+    "question": 10,
+    "option_text": "장소",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 40,
+  "fields": {
+    "question": 10,
+    "option_text": "방향",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 41,
+  "fields": {
+    "question": 11,
+    "option_text": "DABC",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 42,
+  "fields": {
+    "question": 11,
+    "option_text": "BCAD",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 43,
+  "fields": {
+    "question": 11,
+    "option_text": "BADC",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 44,
+  "fields": {
+    "question": 11,
+    "option_text": "ACDB",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 45,
+  "fields": {
+    "question": 12,
+    "option_text": "약을 만드는 방법",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 46,
+  "fields": {
+    "question": 12,
+    "option_text": "운동을 하는 방법",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 47,
+  "fields": {
+    "question": 12,
+    "option_text": "병원에 가서 진료받은 경험",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 48,
+  "fields": {
+    "question": 12,
+    "option_text": "건강한 식사 방법",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 49,
+  "fields": {
+    "question": 13,
+    "option_text": "공원에서 만난 사람들",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 50,
+  "fields": {
+    "question": 13,
+    "option_text": "운동을 잘하는 방법",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 51,
+  "fields": {
+    "question": 13,
+    "option_text": "공원에서의 아침 산책",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 52,
+  "fields": {
+    "question": 13,
+    "option_text": "강아지와 산책하는 방법",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 53,
+  "fields": {
+    "question": 14,
+    "option_text": "학생들이 가장 좋아하는 과목은 수학입니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 54,
+  "fields": {
+    "question": 14,
+    "option_text": "영어를 좋아하는 학생이 가장 많습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 55,
+  "fields": {
+    "question": 14,
+    "option_text": "사회를 좋아하는 학생은 20명입니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 56,
+  "fields": {
+    "question": 14,
+    "option_text": "과학을 좋아하는 학생은 국어보다 많습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 57,
+  "fields": {
+    "question": 15,
+    "option_text": "한국인은 소고기를 가장 많이 소비합니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 58,
+  "fields": {
+    "question": 15,
+    "option_text": "2023년 한국인의 1인당 육류 소비량은 60kg을 넘었습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 59,
+  "fields": {
+    "question": 15,
+    "option_text": "한국인의 쌀 소비량은 육류 소비량보다 많습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 60,
+  "fields": {
+    "question": 15,
+    "option_text": "최근에는 육류를 더 많이 소비하는 사람들이 늘고 있습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 61,
+  "fields": {
+    "question": 16,
+    "option_text": "기어",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 62,
+  "fields": {
+    "question": 16,
+    "option_text": "코일 스프링",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 63,
+  "fields": {
+    "question": 16,
+    "option_text": "풀러",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 64,
+  "fields": {
+    "question": 16,
+    "option_text": "수준기",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 65,
+  "fields": {
+    "question": 17,
+    "option_text": "자전거를 타고 있습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 66,
+  "fields": {
+    "question": 17,
+    "option_text": "수영을 하고 있습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 67,
+  "fields": {
+    "question": 17,
+    "option_text": "낚시를 하고 있습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 68,
+  "fields": {
+    "question": 17,
+    "option_text": "사진을 찍고 있습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 69,
+  "fields": {
+    "question": 18,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_114246_ri2rxf",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 70,
+  "fields": {
+    "question": 18,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_114256_g7yuzd",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 71,
+  "fields": {
+    "question": 18,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_114937_peop6z",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 72,
+  "fields": {
+    "question": 18,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_114949_ovwyie",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 73,
+  "fields": {
+    "question": 19,
+    "option_text": "장갑을 착용하지 마시오.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 74,
+  "fields": {
+    "question": 19,
+    "option_text": "물로 불을 끄지 마시오.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 75,
+  "fields": {
+    "question": 19,
+    "option_text": "지게차 운전 하지 마시오.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 76,
+  "fields": {
+    "question": 19,
+    "option_text": "스위치의 상태를 바꾸지 마시오.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 77,
+  "fields": {
+    "question": 20,
+    "option_text": "양계",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 78,
+  "fields": {
+    "question": 20,
+    "option_text": "양돈",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 79,
+  "fields": {
+    "question": 20,
+    "option_text": "양식",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 80,
+  "fields": {
+    "question": 20,
+    "option_text": "우사",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 81,
+  "fields": {
+    "question": 21,
+    "option_text": "고후",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 82,
+  "fields": {
+    "question": 21,
+    "option_text": "보호",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 83,
+  "fields": {
+    "question": 21,
+    "option_text": "이후",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 84,
+  "fields": {
+    "question": 21,
+    "option_text": "소화",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 85,
+  "fields": {
+    "question": 22,
+    "option_text": "식당",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 86,
+  "fields": {
+    "question": 22,
+    "option_text": "음식",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 87,
+  "fields": {
+    "question": 22,
+    "option_text": "식점",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 88,
+  "fields": {
+    "question": 22,
+    "option_text": "방식",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 89,
+  "fields": {
+    "question": 23,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_115550_ai0qjg",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 90,
+  "fields": {
+    "question": 23,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_115601_h7i92n",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 91,
+  "fields": {
+    "question": 23,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_115615_ktuz1e",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 92,
+  "fields": {
+    "question": 23,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_115626_zjdejp",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 93,
+  "fields": {
+    "question": 24,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_122320_zryrkd",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 94,
+  "fields": {
+    "question": 24,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_122350_ett9z9",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 95,
+  "fields": {
+    "question": 24,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124015_cwodwb",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 96,
+  "fields": {
+    "question": 24,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124030_xm8sw0",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 97,
+  "fields": {
+    "question": 25,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124508_t8jv4m",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 98,
+  "fields": {
+    "question": 25,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124518_dvp1pr",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 99,
+  "fields": {
+    "question": 25,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124715_ibquyz",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 100,
+  "fields": {
+    "question": 25,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124724_ezuokw",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 101,
+  "fields": {
+    "question": 26,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124916_cdzbgz",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 102,
+  "fields": {
+    "question": 26,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124923_l2ot3j",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 103,
+  "fields": {
+    "question": 26,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124941_fakjkh",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 104,
+  "fields": {
+    "question": 26,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_124950_llwrvz",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 105,
+  "fields": {
+    "question": 27,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_125153_hizsai",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 106,
+  "fields": {
+    "question": 27,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_125200_ngufqf",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 107,
+  "fields": {
+    "question": 27,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_125212_e9j0xy",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 108,
+  "fields": {
+    "question": 27,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_125221_mtqger",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 109,
+  "fields": {
+    "question": 28,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_125702_qh0zul",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 110,
+  "fields": {
+    "question": 28,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_125710_hsmrsi",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 111,
+  "fields": {
+    "question": 28,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_125719_h0epjm",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 112,
+  "fields": {
+    "question": 28,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_125728_pbkssl",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 113,
+  "fields": {
+    "question": 29,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/29-1_j1xlww",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 114,
+  "fields": {
+    "question": 29,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/29-2_roys5g",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 115,
+  "fields": {
+    "question": 29,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/29-3_kn5e3h",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 116,
+  "fields": {
+    "question": 29,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/29-4_upvayo",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 117,
+  "fields": {
+    "question": 30,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/30-1_dqnsrb",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 118,
+  "fields": {
+    "question": 30,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/30-2_ad0g16",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 119,
+  "fields": {
+    "question": 30,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/30-3_milgcc",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 120,
+  "fields": {
+    "question": 30,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/30-4_arxoxp",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 121,
+  "fields": {
+    "question": 31,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/31-1_sk6b7h",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 122,
+  "fields": {
+    "question": 31,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/31-2_nkjmz5",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 123,
+  "fields": {
+    "question": 31,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/31-3_buaso6",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 124,
+  "fields": {
+    "question": 31,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/31-4_mvbwrb",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 125,
+  "fields": {
+    "question": 32,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/32-1_iohpli",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 126,
+  "fields": {
+    "question": 32,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/32-2_khq23d",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 127,
+  "fields": {
+    "question": 32,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/32-3_osodyy",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 128,
+  "fields": {
+    "question": 32,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/32-4_gilm9n",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 129,
+  "fields": {
+    "question": 33,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/33-1_rsxceh",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 130,
+  "fields": {
+    "question": 33,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/33-2_x0dseu",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 131,
+  "fields": {
+    "question": 33,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/33-3_onfruw",
+    "is_correct": true,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 132,
+  "fields": {
+    "question": 33,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/33-4_ptwhjm",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 133,
+  "fields": {
+    "question": 34,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/34-1_tfjdc9",
+    "is_correct": true,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 134,
+  "fields": {
+    "question": 34,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/34-2_ewdret",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 135,
+  "fields": {
+    "question": 34,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/34-3_z77o4n",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 136,
+  "fields": {
+    "question": 34,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/34-4_wj3qqb",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 137,
+  "fields": {
+    "question": 35,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_131909_los14w",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 138,
+  "fields": {
+    "question": 35,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_131917_ficgsh",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 139,
+  "fields": {
+    "question": 35,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_131925_uaxvyz",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 140,
+  "fields": {
+    "question": 35,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_132045_v85mvu",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 141,
+  "fields": {
+    "question": 36,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_132143_d4xq9o",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 142,
+  "fields": {
+    "question": 36,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_132152_e7abma",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 143,
+  "fields": {
+    "question": 36,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_132200_h8l8o1",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 144,
+  "fields": {
+    "question": 36,
+    "option_text": "",
+    "image_url": "mcq/options/images/Screenshot_2026-10-24_132209_vhgee3",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 145,
+  "fields": {
+    "question": 37,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/37-1_yuxmcg",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 146,
+  "fields": {
+    "question": 37,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/37-2_wcwleu",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 147,
+  "fields": {
+    "question": 37,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/37-3_cmoisv",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 148,
+  "fields": {
+    "question": 37,
+    "option_text": "",
+    "image_url": "",
+    "audio_url": "mcq/options/audio/37-4_iiodz2",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 149,
+  "fields": {
+    "question": 38,
+    "option_text": "푸캄 씨는 오늘 친구들과 저녁을 먹었습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 150,
+  "fields": {
+    "question": 38,
+    "option_text": "푸캄 씨는 집에서 친구들과 저녁을 먹었습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 151,
+  "fields": {
+    "question": 38,
+    "option_text": "칼로 씨는 쓰레기를 쓰레기봉투에 넣으면 안 된다고 했습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 152,
+  "fields": {
+    "question": 38,
+    "option_text": "캔은 쓰레기봉투에 넣어서 버려야 합니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 153,
+  "fields": {
+    "question": 39,
+    "option_text": "여자는 어제부터 목과 머리가 아팠습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 154,
+  "fields": {
+    "question": 39,
+    "option_text": "여자는 감기에 걸리지 않았습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 155,
+  "fields": {
+    "question": 39,
+    "option_text": "남자가 따뜻한 물을 적게 마시라고 했습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 156,
+  "fields": {
+    "question": 39,
+    "option_text": "남자가 여자에게 말을 많이 하라고 했습니다.",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 4
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 157,
+  "fields": {
+    "question": 40,
+    "option_text": "새로 온 직원의 외모",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 1
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 158,
+  "fields": {
+    "question": 40,
+    "option_text": "새로 온 직원의 국적",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 2
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 159,
+  "fields": {
+    "question": 40,
+    "option_text": "새로 온 직원의 복장",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": false,
+    "order": 3
+  }
+},
+{
+  "model": "exams.examoption",
+  "pk": 160,
+  "fields": {
+    "question": 40,
+    "option_text": "새로 온 직원의 태도",
+    "image_url": "",
+    "audio_url": "",
+    "is_correct": true,
+    "order": 4
+  }
+},
+{
+  "model": "results.examattempt",
+  "pk": 4,
+  "fields": {
+    "daily_exam": 1,
+    "student": 2,
+    "started_at": "2026-10-28T14:17:56.141Z",
+    "deadline_at": "2026-10-28T15:07:56.141Z",
+    "submitted_at": "2026-10-28T14:18:05.000Z",
+    "is_submitted": true,
+    "correct_answers": 0,
+    "score": "0.00",
+    "percentage": "0.00",
+    "duration_seconds": 8
+  }
+}
+]
