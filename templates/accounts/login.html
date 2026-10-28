@@ -1,0 +1,21 @@
+
+{% extends "base.html" %}
+{% block title %}Login | Online Exam{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>Student login</h1>
+    <p class="muted">Sign in to access your scheduled exam.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
+        {% endfor %}
+        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
+</div>
+{% endblock %}

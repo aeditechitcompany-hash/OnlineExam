@@ -1,0 +1,58 @@
+
+{% extends "base.html" %}
+
+{% block title %}Daily Exam{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Daily Online Exam</h1>
+    <p>Today's date: {{ today|date:"F j, Y" }}</p>
+
+    {% if daily_exam %}
+        <h2>{{ daily_exam.title }}</h2>
+
+        <p>
+            <strong>Duration:</strong>
+            {{ daily_exam.duration_minutes }} minutes
+        </p>
+        <p>
+            <strong>Questions:</strong>
+            {{ daily_exam.total_questions }}
+        </p>
+
+        {% if attempt %}
+            {% if attempt.is_submitted %}
+                <p>You have already completed today's exam.</p>
+                <p>
+                    <a href="{% url 'exam-result' attempt_id=attempt.pk %}">
+                        View your result
+                    </a>
+                </p>
+            {% else %}
+                <p>You have already started today's exam.</p>
+                <p>
+                    The timer continues from your original start time.
+                </p>
+                <p>
+                    <a href="{% url 'take-exam' attempt_id=attempt.pk %}">
+                        Continue exam
+                    </a>
+                </p>
+            {% endif %}
+        {% else %}
+            <p>
+                You can attempt this exam only once.
+                Your timer starts when you begin.
+            </p>
+
+            <a class="button"
+                href="{% url 'exam-instructions' exam_id=daily_exam.pk %}">
+                    Start Exam
+            </a>
+        {% endif %}
+    {% else %}
+        <p>No exam has been published for today yet.</p>
+        <p>Please check again later.</p>
+    {% endif %}
+</div>
+{% endblock %}

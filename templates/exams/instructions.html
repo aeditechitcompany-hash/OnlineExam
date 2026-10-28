@@ -1,0 +1,196 @@
+
+{% extends "base.html" %}
+
+{% block title %}नियम र शर्तहरू · {{ daily_exam.title }}{% endblock %}
+
+{% block extra_head %}
+<style>
+    .instructions-page {
+        max-width: 760px;
+        margin: 0 auto;
+    }
+
+    .instructions-header {
+        background: linear-gradient(135deg, #153878, #2867ed);
+        color: white;
+        padding: 26px;
+        border-radius: 20px;
+        margin-bottom: 26px;
+        box-shadow: 0 12px 30px rgba(28, 75, 175, .18);
+    }
+
+    .instructions-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: white;
+        opacity: .95;
+        margin-bottom: 22px;
+    }
+
+    .instructions-header h1 {
+        font-size: clamp(24px, 4vw, 32px);
+        margin: 0 0 8px;
+    }
+
+    .instructions-header p {
+        color: #e2eaff;
+        margin: 0;
+    }
+
+    .instructions-intro {
+        margin-bottom: 20px;
+    }
+
+    .instructions-intro h2 {
+        margin-bottom: 8px;
+    }
+
+    .instruction-card {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 13px;
+        box-shadow: var(--shadow);
+    }
+
+    .instruction-icon {
+        width: 48px;
+        height: 48px;
+        flex: 0 0 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: #edf2ff;
+        color: #2457e6;
+        font-size: 23px;
+        font-weight: 800;
+    }
+
+    .instruction-card h3 {
+        margin: 2px 0 7px;
+        font-size: 17px;
+    }
+
+    .instruction-card p {
+        color: #69758c;
+        margin: 0;
+        line-height: 1.8;
+    }
+
+    .instructions-footer {
+        position: sticky;
+        bottom: 0;
+        background: rgba(245, 247, 252, .96);
+        padding: 16px 0 8px;
+        margin-top: 20px;
+    }
+
+    .continue-button {
+        width: 100%;
+        min-height: 54px;
+        font-size: 16px;
+        border-radius: 13px;
+    }
+
+    .instructions-note {
+        text-align: center;
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 11px;
+    }
+
+    @media (max-width: 520px) {
+        .instructions-header { padding: 21px; border-radius: 16px; }
+        .instruction-card { padding: 16px; gap: 12px; }
+        .instruction-icon {
+            width: 43px;
+            height: 43px;
+            flex-basis: 43px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="instructions-page">
+
+    <header class="instructions-header">
+        <a class="instructions-back" href="{% url 'exam-home' %}">
+            <span aria-hidden="true">←</span> पछाडि जानुहोस्
+        </a>
+
+        <h1>{{ daily_exam.title }}</h1>
+        <p>नियम र शर्तहरू</p>
+    </header>
+
+    <section class="instructions-intro">
+        <h2>सुरु गर्नु अघि</h2>
+        <p class="muted">
+            कृपया निर्देशनहरू ध्यानपूर्वक पढ्नुहोस्।
+        </p>
+    </section>
+
+    <article class="instruction-card">
+        <div class="instruction-icon" aria-hidden="true">◷</div>
+        <div>
+            <h3>समय सीमा</h3>
+            <p>
+                यो सेट पूरा गर्न तपाईंलाई
+                {{ daily_exam.duration_minutes }} मिनेट समय हुनेछ।
+            </p>
+        </div>
+    </article>
+
+    <article class="instruction-card">
+        <div class="instruction-icon" aria-hidden="true">⚑</div>
+        <div>
+            <h3>क्विज सकाउने तरिका</h3>
+            <p>
+                सबै {{ daily_exam.total_questions }} प्रश्नहरूको उत्तर दिएपछि
+                "समाप्त गर्नुहोस्" थिच्नुहोस्।
+            </p>
+        </div>
+    </article>
+
+    <article class="instruction-card">
+        <div class="instruction-icon" aria-hidden="true">⌛</div>
+        <div>
+            <h3>समय सकिएमा</h3>
+            <p>
+                समय सकिएपछि क्विज स्वतः रोकिन्छ र तपाईंको नतिजा देखाइन्छ।
+            </p>
+        </div>
+    </article>
+
+    <article class="instruction-card">
+        <div class="instruction-icon" aria-hidden="true">☝</div>
+        <div>
+            <h3>प्रश्नहरूको उत्तर दिने तरिका</h3>
+            <p>
+                "अघिल्लो" र "अर्को" प्रयोग गरेर प्रश्नहरूमा सर्नुहोस्।
+                उत्तर जुनसुकै बेला बदल्न सकिन्छ।
+            </p>
+        </div>
+    </article>
+
+    <footer class="instructions-footer">
+        <form method="post"
+              action="{% url 'start-exam' exam_id=daily_exam.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="primary-button continue-button">
+                जारी राख्नुहोस् →
+            </button>
+        </form>
+        <p class="instructions-note">
+            जारी राखेपछि परीक्षाको समय सुरु हुनेछ।
+        </p>
+    </footer>
+
+</div>
+{% endblock %}
+

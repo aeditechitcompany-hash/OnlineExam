@@ -1,0 +1,21 @@
+
+{% extends "base.html" %}
+{% block title %}Register | Online Exam{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>Create your exam account</h1>
+    <p class="muted">Use your own account to take daily exams and view results.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
+        {% endfor %}
+        <button type="submit">Create account</button>
+    </form>
+    <p>Already registered? <a href="{% url 'login' %}">Login</a>.</p>
+</div>
+{% endblock %}
+
