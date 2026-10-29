@@ -560,9 +560,48 @@
         cursor: not-allowed;
     }
 
+.mobile-navigator {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .mobile-navigator {
+        display: block;
+        margin: 0 0 16px;
+    }
+
+    #mobile-navigator-toggle {
+        width: 100%;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 12px 15px;
+        border-radius: 13px;
+    }
+
     .exam-sidebar {
         display: none;
+        margin-bottom: 18px;
     }
+
+    .exam-sidebar.mobile-open {
+        display: block;
+    }
+
+    .exam-sidebar .palette {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .exam-sidebar .palette-button {
+        min-height: 44px;
+    }
+
+    .exam-sidebar .sidebar-submit {
+        margin-top: 16px;
+    }
+}
 
     /* Prevent the fixed bottom bar from covering question content. */
     body {
@@ -636,6 +675,17 @@
 
 <div class="exam-progress" aria-label="Exam completion progress">
     <div class="exam-progress-fill" id="progress-fill"></div>
+</div>
+
+<div class="mobile-navigator">
+    <button
+        type="button"
+        class="secondary-button"
+        id="mobile-navigator-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-question-navigator">
+        Questions <span id="mobile-answered-summary">0/{{ questions|length }} answered</span>
+    </button>
 </div>
 
 <div class="exam-layout">
@@ -731,7 +781,7 @@
         </div>
     </section>
 
-    <aside class="exam-sidebar">
+    <aside class="exam-sidebar" id="mobile-question-navigator">
         <div class="card">
             <div class="sidebar-heading">
                 <h3>Question navigator</h3>
@@ -819,7 +869,16 @@ function openQuestionImage(src) {
     const form = document.getElementById("exam-form");
     const sections = Array.from(document.querySelectorAll(".exam-question"));
     const paletteButtons = Array.from(document.querySelectorAll(".palette-button"));
+    const mobileNavigatorToggle =
+        document.getElementById("mobile-navigator-toggle");
+    const mobileAnsweredSummary =
+        document.getElementById("mobile-answered-summary");
+    const examSidebar = document.getElementById("mobile-question-navigator");
 
+    mobileNavigatorToggle.addEventListener("click", function () {
+        const isOpen = examSidebar.classList.toggle("mobile-open");
+        mobileNavigatorToggle.setAttribute("aria-expanded", String(isOpen));
+    });
     const questionBadge = document.getElementById("question-badge");
     const countdown = document.getElementById("countdown");
     const timerChip = document.getElementById("timer-chip");
@@ -861,6 +920,8 @@ function openQuestionImage(src) {
     function updateProgress() {
         const answered = sections.filter((_, i) => isAnswered(i)).length;
         answeredCount.textContent = answered;
+        mobileAnsweredSummary.textContent =
+            answered + "/" + sections.length + " answered";
         progressFill.style.width = sections.length
             ? (answered / sections.length * 100) + "%"
             : "0%";
@@ -890,6 +951,11 @@ function openQuestionImage(src) {
         nextButton.disabled = currentIndex === sections.length - 1;
 
         updateProgress();
+        if (window.matchMedia("(max-width: 700px)").matches) {
+            examSidebar.classList.remove("mobile-open");
+            mobileNavigatorToggle.setAttribute("aria-expanded", "false");
+        }
+
     }
 
     paletteButtons.forEach(button => {
