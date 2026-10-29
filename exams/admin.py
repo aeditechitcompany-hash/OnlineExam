@@ -82,10 +82,14 @@ class DailyExamAdmin(admin.ModelAdmin):
                     for row in cursor.fetchall()
                 ]
         except DatabaseError:
+            import logging
+            logging.getLogger(__name__).exception(
+                "Failed to load MCQ question sets from source_mcq"
+            )
             messages.error(
                 request,
                 "Could not load source question sets. "
-                "Check the source_mcq database connection.",
+                "Check the Render logs for the database error.",
             )
             return render(
                 request,
