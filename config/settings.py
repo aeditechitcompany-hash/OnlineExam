@@ -132,7 +132,7 @@ if all(os.environ.get(key) for key in [
         "NAME": os.environ["SOURCE_DB_NAME"],
         "USER": os.environ["SOURCE_DB_USER"],
         "PASSWORD": os.environ["SOURCE_DB_PASSWORD"],
-        "HOST": os.environ["SOURCE_DB_HOST"],
+        "HOST": os.environ["SOURCE_DB_HOST"].strip(),
         "PORT": os.environ.get("SOURCE_DB_PORT", "24467"),
         "OPTIONS": {
             "sslmode": "require",
