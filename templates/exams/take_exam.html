@@ -175,6 +175,61 @@
     }
 
     .answer-content { flex: 1; min-width: 0; }
+        /* Custom clickable audio controls */
+    .audio-control {
+        display: inline-flex;
+        align-items: center;
+        margin: 10px 0;
+    }
+
+    .audio-icon-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        min-width: 48px;
+        min-height: 46px;
+        padding: 9px 13px;
+        border: 1px solid #cbd9eb;
+        border-radius: 13px;
+        background: #edf5ff;
+        color: #203f70;
+        cursor: pointer;
+        transition: background .2s, transform .2s;
+    }
+
+    .audio-icon-button:hover {
+        background: #dcecff;
+    }
+
+    .audio-icon-button:active {
+        transform: scale(.96);
+    }
+
+    .audio-icon-button svg {
+        width: 23px;
+        height: 23px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .audio-icon-button .audio-state {
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .audio-icon-button.playing {
+        color: white;
+        background: #203f70;
+        border-color: #203f70;
+    }
+
+    .exam-audio {
+        display: none !important;
+    }
 
     .answer-content img {
         display: block;
@@ -751,10 +806,23 @@
                     {% endif %}
 
                     {% if question.audio_url %}
-                    <audio controls preload="none">
-                        <source src="{{ question.audio_url }}">
-                        Your browser does not support audio.
-                    </audio>
+                    <div class="audio-control">
+                        <button type="button"
+                                class="audio-icon-button"
+                                data-audio-toggle
+                                aria-label="Play question audio"
+                                title="Play audio">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M11 5 6 9H3v6h3l5 4V5Z"></path>
+                                <path d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+                                <path d="M18.5 5.5a9 9 0 0 1 0 13"></path>
+                            </svg>
+                            <span class="audio-state" aria-hidden="true">▶</span>
+                        </button>
+                        <audio class="exam-audio" preload="none">
+                            <source src="{{ question.audio_url }}">
+                        </audio>
+                    </div>
                     {% endif %}
 
                     <div class="answer-list">
@@ -779,10 +847,23 @@
                                 {% endif %}
 
                                 {% if option.audio_url %}
-                                    <audio controls preload="none">
+                                <div class="audio-control">
+                                    <button type="button"
+                                            class="audio-icon-button"
+                                            data-audio-toggle
+                                            aria-label="Play answer audio"
+                                            title="Play audio">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M11 5 6 9H3v6h3l5 4V5Z"></path>
+                                            <path d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+                                            <path d="M18.5 5.5a9 9 0 0 1 0 13"></path>
+                                        </svg>
+                                        <span class="audio-state" aria-hidden="true">▶</span>
+                                    </button>
+                                    <audio class="exam-audio" preload="none">
                                         <source src="{{ option.audio_url }}">
-                                        Your browser does not support audio.
                                     </audio>
+                                </div>
                                 {% endif %}
                             </span>
                         </label>
@@ -893,6 +974,69 @@ function openQuestionImage(src) {
     document.getElementById("image-overlay").classList.add("open");
 }
 
+// Custom audio controls for question and answer audio.
+(function () {
+    "use strict";
+
+    function updateAudioButton(audio, playing) {
+        const button = audio.parentElement.querySelector("[data-audio-toggle]");
+        if (!button) return;
+
+        button.classList.toggle("playing", playing);
+        button.setAttribute(
+            "aria-label",
+            playing ? "Pause audio" : "Play audio"
+        );
+        button.title = playing ? "Pause audio" : "Play audio";
+
+        const state = button.querySelector(".audio-state");
+        if (state) {
+            state.textContent = playing ? "Ⅱ" : "▶";
+        }
+    }
+
+    document.addEventListener("click", function (event) {
+        const button = event.target.closest("[data-audio-toggle]");
+        if (!button) return;
+
+        // Prevent the answer label from selecting its radio button.
+        event.preventDefault();
+        event.stopPropagation();
+
+        const audio = button.parentElement.querySelector(".exam-audio");
+        if (!audio) return;
+
+        // Stop all other exam audio before playing this one.
+        document.querySelectorAll(".exam-audio").forEach(function (other) {
+            if (other !== audio && !other.paused) {
+                other.pause();
+                other.currentTime = 0;
+            }
+        });
+
+        if (audio.paused) {
+            audio.play().catch(function () {
+                updateAudioButton(audio, false);
+            });
+        } else {
+            audio.pause();
+        }
+    });
+
+    document.querySelectorAll(".exam-audio").forEach(function (audio) {
+        audio.addEventListener("play", function () {
+            updateAudioButton(audio, true);
+        });
+
+        audio.addEventListener("pause", function () {
+            updateAudioButton(audio, false);
+        });
+
+        audio.addEventListener("ended", function () {
+            updateAudioButton(audio, false);
+        });
+    });
+})();
 (function () {
     const deadlineMs = {{ deadline_ms }};
     const serverNowMs = {{ server_now_ms }};
