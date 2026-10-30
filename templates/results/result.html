@@ -1,0 +1,657 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Exam Result{% endblock %}
+
+{% block extra_head %}
+<style>
+    .result-page {
+        --blue: #1976d2;
+        --navy: #0d47a1;
+        --muted: #607d9b;
+        --border: #d9e8ff;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 24px 20px 40px;
+        color: #17365d;
+    }
+
+    .result-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 23px;
+        border-radius: 22px;
+        color: white;
+        background: linear-gradient(120deg, #0d47a1, #1976d2, #42a5f5);
+        box-shadow: 0 8px 22px rgba(25, 118, 210, .18);
+    }
+
+    .result-header-icon {
+        width: 54px;
+        height: 54px;
+        flex: 0 0 54px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: rgba(255,255,255,.17);
+        font-size: 29px;
+    }
+
+    .result-header h1 {
+        margin: 0 0 5px;
+        font-size: 24px;
+        line-height: 1.25;
+        color: white;
+    }
+
+    .result-header p {
+        margin: 0;
+        color: rgba(255,255,255,.87);
+        overflow-wrap: anywhere;
+    }
+
+    .result-card {
+        margin-top: 17px;
+        padding: 25px;
+        border: 1px solid var(--border);
+        border-radius: 23px;
+        background: white;
+        box-shadow: 0 7px 22px rgba(13,71,161,.055);
+    }
+
+    .score-card {
+        text-align: center;
+        padding-top: 30px;
+        padding-bottom: 27px;
+    }
+
+    .score-ring {
+        width: 190px;
+        height: 190px;
+        max-width: 100%;
+        margin: 0 auto 20px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: conic-gradient(
+            #1976d2 {{ percentage }}%,
+            #e3eeff {{ percentage }}%
+        );
+    }
+
+    .score-ring-inner {
+        width: 158px;
+        height: 158px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f4f8ff;
+    }
+
+    .score-percentage {
+        color: var(--navy);
+        font-size: 38px;
+        font-weight: 900;
+        line-height: 1.2;
+    }
+
+    .score-fraction {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .score-card h2 {
+        margin: 0 0 7px;
+        color: #1565c0;
+        font-size: 25px;
+    }
+
+    .score-card .subtitle {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+    }
+
+    .result-stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 17px;
+    }
+
+    .stat-card {
+        min-width: 0;
+        padding: 17px 5px;
+        text-align: center;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 17px;
+    }
+
+    .stat-icon {
+        display: block;
+        margin-bottom: 7px;
+        color: var(--blue);
+        font-size: 25px;
+    }
+
+    .stat-value {
+        display: block;
+        color: var(--navy);
+        font-size: 23px;
+        font-weight: 900;
+        overflow-wrap: anywhere;
+    }
+
+    .stat-label {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 17px;
+    }
+
+    .detail-card {
+        min-width: 0;
+        padding: 21px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: white;
+    }
+
+    .attempt-card {
+        background: #eaf3ff;
+        border-color: #c7dfff;
+    }
+
+    .detail-heading {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+        color: var(--navy);
+        font-size: 15px;
+        font-weight: 800;
+    }
+
+    .detail-heading-icon {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        color: white;
+        background: var(--blue);
+        font-size: 21px;
+    }
+
+    .detail-number {
+        color: var(--navy);
+        font-size: 34px;
+        font-weight: 900;
+    }
+
+    .detail-total {
+        color: var(--muted);
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .progress-track {
+        width: 100%;
+        height: 9px;
+        margin: 12px 0 9px;
+        overflow: hidden;
+        border-radius: 99px;
+        background: #e3eeff;
+    }
+
+    .attempt-card .progress-track {
+        background: #d4e5fa;
+    }
+
+    .progress-fill {
+        height: 100%;
+        border-radius: inherit;
+        background: var(--blue);
+    }
+
+    .detail-caption {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12.5px;
+        line-height: 1.5;
+    }
+
+    .performance-title {
+        margin: 0 0 8px;
+        color: var(--blue);
+        font-size: 22px;
+        font-weight: 800;
+        overflow-wrap: anywhere;
+    }
+
+    .result-actions {
+        display: grid;
+        gap: 12px;
+        margin-top: 23px;
+    }
+
+    .result-button {
+        min-height: 54px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 9px;
+        padding: 13px 18px;
+        border: 1px solid var(--blue);
+        border-radius: 15px;
+        font: inherit;
+        font-weight: 800;
+        font-size: 15px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background .15s ease;
+    }
+
+    .result-button-primary {
+        background: var(--blue);
+        color: white;
+    }
+
+    .result-button-primary:hover {
+        background: var(--navy);
+        color: white;
+    }
+
+    .result-button-outline {
+        background: white;
+        color: var(--blue);
+    }
+
+    .result-button-outline:hover {
+        background: #f0f6ff;
+    }
+
+    .result-button-home {
+        border-color: transparent;
+        color: var(--muted);
+        background: transparent;
+    }
+
+    .result-button-home:hover {
+        background: #eaf3ff;
+    }
+
+    .leaderboard-card {
+        margin-top: 18px;
+        padding: 22px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        background: white;
+        box-shadow: 0 7px 22px rgba(13,71,161,.055);
+    }
+
+    .leaderboard-heading {
+        margin: 0 0 6px;
+        color: var(--navy);
+        font-size: 21px;
+        font-weight: 900;
+    }
+
+    .leaderboard-description {
+        margin: 0 0 17px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .leaderboard-table-wrap {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        text-align: left;
+    }
+
+    .leaderboard-table th {
+        padding: 12px 9px;
+        color: var(--muted);
+        background: #f2f7ff;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .leaderboard-table td {
+        padding: 13px 9px;
+        border-bottom: 1px solid #eaf1fc;
+        color: #17365d;
+        vertical-align: middle;
+    }
+
+    .leaderboard-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .leaderboard-table .leaderboard-me td {
+        background: #eaf3ff;
+        font-weight: 800;
+    }
+
+    .leaderboard-rank {
+        color: var(--blue);
+        font-weight: 900;
+        white-space: nowrap;
+    }
+
+    .leaderboard-score {
+        color: var(--navy);
+        font-weight: 900;
+        white-space: nowrap;
+    }
+
+    .leaderboard-empty {
+        padding: 20px;
+        border-radius: 14px;
+        color: var(--muted);
+        background: #f4f8ff;
+        text-align: center;
+    }
+    @media (min-width: 701px) {
+        .result-page {
+            padding-top: 30px;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .result-page {
+            padding: 16px 12px 28px;
+        }
+
+        .result-header {
+            padding: 18px;
+            border-radius: 19px;
+        }
+
+        .result-header h1 {
+            font-size: 21px;
+        }
+
+        .result-card {
+            padding: 19px;
+        }
+
+        .score-card {
+            padding-top: 25px;
+        }
+
+        .score-ring {
+            width: 170px;
+            height: 170px;
+        }
+
+        .score-ring-inner {
+            width: 142px;
+            height: 142px;
+        }
+
+        .score-percentage {
+            font-size: 34px;
+        }
+
+        .result-stats {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .detail-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="result-page">
+    <header class="result-header">
+        <div class="result-header-icon" aria-hidden="true">🏆</div>
+        <div>
+            <h1>Exam Completed</h1>
+            <p>{{ attempt.daily_exam.title }}</p>
+        </div>
+    </header>
+
+    <section class="result-card score-card" aria-label="Final score">
+        <div class="score-ring"
+             role="img"
+             aria-label="Score {{ percentage|floatformat:0 }} percent">
+            <div class="score-ring-inner">
+                <span class="score-percentage">{{ percentage|floatformat:0 }}%</span>
+                <span class="score-fraction">{{ correct_count }} / {{ total_questions }}</span>
+            </div>
+        </div>
+
+        <h2>
+            {% if percentage >= 90 %}
+                Outstanding Work!
+            {% elif percentage >= 75 %}
+                Excellent Work!
+            {% elif percentage >= 60 %}
+                Good Work!
+            {% else %}
+                Keep Practicing!
+            {% endif %}
+        </h2>
+        <p class="subtitle">
+            Your exam result has been recorded.
+        </p>
+    </section>
+
+    <section class="result-stats" aria-label="Exam statistics">
+        <div class="stat-card">
+            <span class="stat-icon" aria-hidden="true">✓</span>
+            <span class="stat-value">{{ correct_count }}</span>
+            <span class="stat-label">Correct</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon" aria-hidden="true">✕</span>
+            <span class="stat-value">{{ incorrect_count }}</span>
+            <span class="stat-label">Incorrect</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon" aria-hidden="true">☷</span>
+            <span class="stat-value">{{ attempted_count }}</span>
+            <span class="stat-label">Attempted</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon" aria-hidden="true">−</span>
+            <span class="stat-value">{{ skipped_count }}</span>
+            <span class="stat-label">Skipped</span>
+        </div>
+    </section>
+
+    <section class="detail-grid">
+        <div class="detail-card attempt-card">
+            <div class="detail-heading">
+                <span class="detail-heading-icon" aria-hidden="true">☷</span>
+                <span>Questions Attempted</span>
+            </div>
+            <div>
+                <span class="detail-number">{{ attempted_count }}</span>
+                <span class="detail-total">/ {{ total_questions }}</span>
+            </div>
+            <div class="progress-track"
+                 role="progressbar"
+                 aria-label="Questions attempted"
+                 aria-valuemin="0"
+                 aria-valuemax="{{ total_questions }}"
+                 aria-valuenow="{{ attempted_count }}">
+                <div class="progress-fill"
+                     data-attempted="{{ attempted_count }}"
+                     data-total="{{ total_questions }}"></div>
+            </div>
+            <p class="detail-caption">
+                {{ attempted_count }} of {{ total_questions }} questions attempted
+            </p>
+        </div>
+
+        <div class="detail-card">
+            <div class="detail-heading">
+                <span class="detail-heading-icon" aria-hidden="true">▥</span>
+                <span>Performance</span>
+            </div>
+            <h3 class="performance-title">{{ performance }}</h3>
+            <div class="progress-track"
+                 role="progressbar"
+                 aria-label="Overall score"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 aria-valuenow="{{ percentage|floatformat:0 }}">
+                <div class="progress-fill"
+                     style="width: {{ percentage }}%"></div>
+            </div>
+            <p class="detail-caption">
+                {{ percentage|floatformat:0 }}% overall score
+            </p>
+        </div>
+    </section>
+
+    <section class="leaderboard-card" aria-labelledby="leaderboard-title">
+        <h2 class="leaderboard-heading" id="leaderboard-title">
+            🌍 Overall Leaderboard
+        </h2>
+
+        <p class="leaderboard-description">
+            Top students across all exams, ranked by best percentage,
+            score, and completion time.
+        </p>
+
+        {% if current_student_rank %}
+            <p class="leaderboard-description">
+                Your overall rank:
+                <strong>#{{ current_student_rank }}</strong>
+            </p>
+        {% endif %}
+
+        {% if leaderboard %}
+            <div class="leaderboard-table-wrap">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Student</th>
+                            <th scope="col">Best Result</th>
+                            <th scope="col">Exam</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in leaderboard %}
+                            <tr class="{% if entry.student_id == request.user.pk %}leaderboard-me{% endif %}">
+                                <td class="leaderboard-rank">
+                                    {% if entry.leaderboard_rank == 1 %}
+                                        🥇 #1
+                                    {% elif entry.leaderboard_rank == 2 %}
+                                        🥈 #2
+                                    {% elif entry.leaderboard_rank == 3 %}
+                                        🥉 #3
+                                    {% else %}
+                                        #{{ entry.leaderboard_rank }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ entry.leaderboard_name }}
+                                    {% if entry.student_id == request.user.pk %}
+                                        (You)
+                                    {% endif %}
+                                </td>
+                                <td class="leaderboard-score">
+                                    {{ entry.leaderboard_percentage|floatformat:0 }}%
+                                </td>
+                                <td>{{ entry.daily_exam.title }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="leaderboard-empty">
+                No submitted exam results are available for the leaderboard yet.
+            </div>
+        {% endif %}
+    </section>
+
+    <nav class="result-actions" aria-label="Result actions">
+        <button class="result-button result-button-primary"
+                type="button"
+                id="share-result">
+            <span aria-hidden="true">↗</span>
+            Share Result
+        </button>
+
+        <a class="result-button result-button-home"
+           href="{% url 'exam-home' %}">
+            <span aria-hidden="true">⌂</span>
+            Back to Home
+        </a>
+    </nav>
+</main>
+
+<script>
+(function () {
+    document.querySelectorAll(".progress-fill[data-total]").forEach(function (bar) {
+        const attempted = Number(bar.dataset.attempted || 0);
+        const total = Number(bar.dataset.total || 0);
+        const percent = total > 0
+            ? Math.max(0, Math.min(100, attempted / total * 100))
+            : 0;
+        bar.style.width = percent + "%";
+    });
+
+    const shareButton = document.getElementById("share-result");
+    if (!shareButton) return;
+
+    const shareText =
+        "Exam: {{ attempt.daily_exam.title|escapejs }}\n" +
+        "Score: {{ correct_count }} / {{ total_questions }}\n" +
+        "Percentage: {{ percentage|floatformat:0 }}%";
+
+    shareButton.addEventListener("click", async function () {
+        try {
+            if (navigator.share) {
+                await navigator.share({
+                    title: "Exam Result",
+                    text: shareText
+                });
+            } else if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(shareText);
+                shareButton.textContent = "✓ Result Copied";
+            } else {
+                window.prompt("Copy your result:", shareText);
+            }
+        } catch (error) {
+            if (error.name !== "AbortError") {
+                window.prompt("Copy your result:", shareText);
+            }
+        }
+    });
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,417 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7fc">
+
+    <title>{% block title %}Online Exam{% endblock %}</title>
+
+    <style>
+        :root {
+            --primary: #203f70;
+            --primary-dark: #142d52;
+            --primary-light: #edf2fa;
+            --brand-red: #d71920;
+            --background: #f5f7fc;
+            --surface: #ffffff;
+            --text: #182338;
+            --muted: #77839a;
+            --border: #e4e9f2;
+            --success: #12805c;
+            --success-light: #e8f8f1;
+            --danger: #d93648;
+            --danger-light: #fff0f1;
+            --shadow: 0 8px 28px rgba(24, 43, 86, .055);
+            --radius: 18px;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        a { color: var(--primary); text-decoration: none; }
+
+        button, input, select, textarea {
+            font: inherit;
+        }
+
+        button { cursor: pointer; }
+
+        button:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        .site-header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 5;
+        }
+
+        .header-inner {
+            max-width: 1440px;
+            min-height: 76px;
+            margin: auto;
+            padding: 14px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text);
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.3px;
+            min-width: 0;
+        }
+
+        .brand-logo {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            flex: 0 0 auto;
+            border-radius: 10px;
+        }
+
+        .brand-copy { display: grid; line-height: 1.25; }
+        .brand-copy small {
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 650;
+            letter-spacing: .35px;
+            margin-top: 4px;
+        }
+
+        .brand-accent { color: var(--brand-red); }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-nav a {
+            color: #526078;
+            padding: 9px 12px;
+            border-radius: 9px;
+            font-weight: 600;
+        }
+
+        .header-nav a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .logout-form { display: inline; }
+
+        .logout-button {
+            border: 1px solid var(--border);
+            background: white;
+            color: #526078;
+            padding: 9px 13px;
+            border-radius: 9px;
+            font-weight: 600;
+        }
+
+        .logout-button:hover { background: #f7f8fc; }
+
+        main {
+            width: 100%;
+            max-width: 1440px;
+            margin: 34px auto 64px;
+            padding: 0 30px;
+        }
+
+        .page-heading { margin-bottom: 25px; }
+
+        .eyebrow {
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 7px;
+        }
+
+        h1, h2, h3, h4 { line-height: 1.3; }
+
+        h1 {
+            font-size: clamp(25px, 3vw, 34px);
+            letter-spacing: -.8px;
+            margin: 0 0 12px;
+        }
+
+        h2 { font-size: 23px; margin: 0 0 12px; }
+        h3 { font-size: 18px; margin: 0 0 12px; }
+
+        p { margin-top: 0; }
+
+        .muted { color: var(--muted); }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 26px;
+            box-shadow: var(--shadow);
+            margin-bottom: 22px;
+        }
+
+        .button, button.primary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+            border-radius: 11px;
+            padding: 12px 19px;
+            font-weight: 700;
+            transition: background .15s, transform .15s;
+        }
+
+        .button:hover, button.primary-button:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        .secondary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: white;
+            color: var(--text);
+            padding: 11px 17px;
+            font-weight: 700;
+        }
+
+        .secondary-button:hover { background: #f7f9ff; }
+
+        .danger-button {
+            background: var(--danger);
+            border: 1px solid var(--danger);
+            color: white;
+            border-radius: 11px;
+            padding: 12px 18px;
+            font-weight: 700;
+        }
+
+        input:not([type="radio"]):not([type="checkbox"]),
+        select, textarea {
+            width: 100%;
+            border: 1px solid #d7deeb;
+            border-radius: 10px;
+            padding: 12px 14px;
+            background: white;
+            color: var(--text);
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(36, 87, 230, .10);
+        }
+
+        label.form-label {
+            display: block;
+            font-weight: 700;
+            margin: 0 0 7px;
+        }
+
+        .form-field { margin-bottom: 18px; }
+
+        .message {
+            padding: 14px 17px;
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #ccefe0;
+            border-radius: 12px;
+            margin-bottom: 17px;
+        }
+
+        .errorlist {
+            color: var(--danger);
+            padding-left: 20px;
+        }
+
+        .empty-state {
+            padding: 42px 20px;
+            text-align: center;
+            border: 1px dashed #cbd5e5;
+            border-radius: 14px;
+            background: #fbfcff;
+        }
+
+        .question-image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin: 18px 0;
+            cursor: zoom-in;
+        }
+
+        audio {
+            display: block;
+            width: 100%;
+            max-width: 520px;
+            margin: 12px 0;
+        }
+
+        .site-footer {
+            text-align: center;
+            padding: 22px 18px 30px;
+            color: var(--muted);
+            font-size: 13px;
+            border-top: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .site-footer strong { color: var(--primary); }
+        .site-footer a { font-weight: 700; }
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            color: #128c4a !important;
+            background: #eaf8ef;
+            border: 1px solid #c8ecd5;
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-weight: 750;
+        }
+        .whatsapp-float {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 80;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 13px 17px;
+            border-radius: 999px;
+            color: #fff !important;
+            background: #168b4b;
+            box-shadow: 0 8px 24px rgba(12, 95, 51, .25);
+            font-weight: 800;
+        }
+        .whatsapp-float:hover { background: #106f3b; }
+        @media (max-width: 650px) {
+            .brand-logo { width: 45px; height: 45px; }
+            .brand { font-size: 15px; }
+            .brand-copy small { font-size: 9px; }
+            .whatsapp-float { right: 12px; bottom: 12px; padding: 11px 14px; }
+        }
+
+        @media (max-width: 650px) {
+            .header-inner {
+                padding: 12px 16px;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .header-nav { gap: 4px; }
+
+            .header-nav a, .logout-button {
+                padding: 8px 9px;
+                font-size: 13px;
+            }
+
+            main {
+                padding: 0 13px;
+                margin-top: 20px;
+            }
+
+            .card { padding: 18px; border-radius: 14px; }
+
+            h1 { font-size: 26px; }
+        }
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="{% if user.is_authenticated %}{% url 'exam-home' %}{% else %}{% url 'login' %}{% endif %}">
+            {% load static %}
+            <img class="brand-logo" src="{% static 'branding/nibangsh-logo.png' %}" alt="Nibangsh logo">
+            <span class="brand-copy">
+                <span>NIBANGSH<span class="brand-accent">.</span> ONLINE EXAM</span>
+                <small>EARTH EDUCATIONAL CONSULTANCY PVT. LTD.</small>
+            </span>
+        </a>
+
+        <nav class="header-nav">
+            <a href="https://nibangshconsultancy.com/" target="_blank" rel="noopener">Website ↗</a>
+            <a class="whatsapp-link" href="https://wa.me/9779851001970" target="_blank" rel="noopener">WhatsApp</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'exam-home' %}">Dashboard</a>
+
+                {% if user.is_staff %}
+                    <a href="/admin/">Administration</a>
+                {% endif %}
+
+                <form class="logout-form" method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="logout-button" type="submit">Log out ↗</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<main>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <strong>Nibangsh Earth Educational Consultancy Pvt. Ltd.</strong><br>
+    Bagbazar, J.F. Restaurant Building, Top Floor, Kathmandu, Nepal<br>
+    <a href="https://nibangshconsultancy.com/" target="_blank" rel="noopener">nibangshconsultancy.com</a>
+    &nbsp;·&nbsp; <a href="mailto:info@nibangshconsultancy.com">info@nibangshconsultancy.com</a>
+    &nbsp;·&nbsp; <a href="https://wa.me/9779851001970" target="_blank" rel="noopener">WhatsApp: +977 9851001970</a>
+    <br><span>Confidential Online Examination System</span>
+</footer>
+{% if request.resolver_match.url_name != 'take-exam' %}
+<a class="whatsapp-float" href="https://wa.me/9779851001970?text=Hello%20Nibangsh%20Consultancy%2C%20I%20need%20support." target="_blank" rel="noopener" aria-label="Contact Nibangsh on WhatsApp">
+    <span aria-hidden="true">●</span> Chat on WhatsApp
+</a>
+{% endif %}
+</body>
+</html>

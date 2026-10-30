@@ -1,0 +1,37 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Local databases and backups
+db.sqlite3
+*.sqlite3
+*.db
+*.sql
+*.dump
+
+# Generated files
+staticfiles/
+media/
+*.log
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local backup files
+*.bak
+*.backup
+*.mobile-backup

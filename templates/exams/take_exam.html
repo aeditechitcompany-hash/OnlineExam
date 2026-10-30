@@ -1,0 +1,1283 @@
+
+{% extends "base.html" %}
+{% load exam_tags static %}
+
+{% block title %}{{ attempt.daily_exam.title }} &#183; Online Exam{% endblock %}
+
+{% block extra_head %}
+<style>
+    .exam-topline {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 22px;
+    }
+
+    .exam-title { margin: 0; font-size: clamp(22px, 3vw, 30px); color: #203f70; }
+
+    .exam-subtitle { color: var(--muted); margin: 7px 0 0; }
+
+    .exam-top-stats {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .stat-chip {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px 14px;
+        min-width: 105px;
+    }
+
+    .stat-label {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .7px;
+        text-transform: uppercase;
+    }
+
+    .stat-value { font-weight: 800; font-size: 17px; }
+
+    .timer-chip {
+        background: var(--primary-light);
+        border-color: #dce5ff;
+        color: var(--primary);
+    }
+
+    .timer-chip.warning {
+        background: var(--danger-light);
+        border-color: #ffd5d9;
+        color: var(--danger);
+    }
+
+    .exam-progress {
+        height: 7px;
+        background: #e5eaf4;
+        border-radius: 99px;
+        overflow: hidden;
+        margin: 0 0 25px;
+    }
+
+    .exam-progress-fill {
+        height: 100%;
+        width: 0;
+        background: var(--primary);
+        border-radius: 99px;
+        transition: width .2s ease;
+    }
+
+    .exam-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 290px;
+        gap: 22px;
+        align-items: start;
+    }
+
+    .question-panel { min-width: 0; }
+
+    .question-card {
+        min-height: 390px;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        border-color: #dfe6f0;
+    }
+
+    .question-card::before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+        background-image: url("{% static 'branding/nibangsh-logo.png' %}");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: min(48%, 310px) auto;
+        opacity: .075;
+        mix-blend-mode: multiply;
+        pointer-events: none;
+    }
+
+    .question-card > * { position: relative; }
+    .question-badge { background: #edf2fa; color: #203f70; }
+    .exam-progress-fill { background: #203f70; }
+    .palette-button.current { border-color: #203f70; color: #203f70; background: #edf2fa; }
+    .answer-option.selected { border-color: #203f70; background: #edf2fa; }
+
+    .question-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 17px;
+        margin-bottom: 24px;
+    }
+
+    .question-badge {
+        background: var(--primary-light);
+        color: var(--primary);
+        padding: 7px 11px;
+        border-radius: 9px;
+        font-weight: 800;
+        font-size: 13px;
+    }
+
+    .question-count { color: var(--muted); font-size: 13px; }
+
+    .question-text {
+        font-size: 19px;
+        font-weight: 650;
+        line-height: 1.8;
+        margin: 0 0 20px;
+        overflow-wrap: anywhere;
+    }
+
+    .answer-list { display: grid; gap: 12px; margin-top: 22px; }
+
+    .answer-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 13px;
+        padding: 15px;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        cursor: pointer;
+        background: white;
+        transition: border-color .15s, background .15s;
+        overflow-wrap: anywhere;
+    }
+
+    .answer-option:hover {
+        border-color: #a9bcff;
+        background: #fafbff;
+    }
+
+    .answer-option.selected {
+        border: 2px solid var(--primary);
+        padding: 14px;
+        background: var(--primary-light);
+    }
+
+    .answer-option input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        margin: 4px 0 0;
+        flex-shrink: 0;
+        accent-color: var(--primary);
+    }
+
+    .answer-content { flex: 1; min-width: 0; }
+
+    .answer-content img {
+        display: block;
+        max-width: min(100%, 300px);
+        max-height: 220px;
+        object-fit: contain;
+        border-radius: 9px;
+        margin-top: 10px;
+    }
+
+    .exam-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+    }
+
+    .exam-actions-group { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .exam-sidebar { position: sticky; top: 18px; }
+
+    .sidebar-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .sidebar-heading h3 { margin: 0; }
+
+    .sidebar-subtitle { color: var(--muted); font-size: 13px; margin-bottom: 19px; }
+
+    .palette {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .palette-button {
+        position: relative;
+        min-width: 0;
+        min-height: 42px;
+        border: 1px solid #dce3ef;
+        border-radius: 10px;
+        background: #f7f9fd;
+        color: #536079;
+        font-weight: 750;
+    }
+
+    .palette-button.answered {
+        color: var(--success);
+        border-color: #bce8d6;
+        background: var(--success-light);
+    }
+
+    .palette-button.current {
+        border: 2px solid var(--primary);
+        background: var(--primary-light);
+        color: var(--primary);
+    }
+
+    .palette-button.current.answered {
+        border-color: var(--primary);
+    }
+
+    .palette-legend { display: grid; gap: 10px; margin-top: 20px; }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: #647089;
+        font-size: 13px;
+    }
+
+    .legend-dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 4px;
+        border: 1px solid #dce3ef;
+        background: #f7f9fd;
+    }
+
+    .legend-dot.answered { background: var(--success-light); border-color: #bce8d6; }
+    .legend-dot.current { background: var(--primary-light); border: 2px solid var(--primary); }
+
+    .save-status {
+        color: var(--muted);
+        font-size: 13px;
+        min-height: 21px;
+        margin: 13px 0 0;
+    }
+
+    .save-status.error { color: var(--danger); }
+    .save-status.saved { color: var(--success); }
+
+    .sidebar-submit { width: 100%; margin-top: 22px; }
+
+    .confirm-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        background: rgba(15, 27, 52, .55);
+    }
+
+    .confirm-overlay.open { display: flex; }
+
+    .confirm-dialog {
+        width: 100%;
+        max-width: 430px;
+        background: white;
+        padding: 28px;
+        border-radius: 20px;
+        box-shadow: 0 20px 70px #0002;
+    }
+
+    .confirm-dialog h2 { margin-bottom: 10px; }
+    .confirm-dialog p { color: var(--muted); }
+
+    .confirm-actions {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 23px;
+    }
+
+    @media (max-width: 900px) {
+        .exam-layout { grid-template-columns: minmax(0, 1fr); }
+        .exam-sidebar { position: static; }
+        .palette { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+        .question-card { min-height: auto; }
+    }
+
+    @media (max-width: 520px) {
+        .exam-topline { align-items: flex-start; }
+        .exam-top-stats { width: 100%; }
+        .stat-chip { flex: 1; min-width: 0; padding: 9px 10px; }
+        .stat-value { font-size: 15px; }
+        .palette { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+        .question-text { font-size: 17px; }
+        .exam-actions { align-items: stretch; }
+        .exam-actions-group { width: 100%; }
+        .exam-actions-group button { flex: 1; }
+        .exam-actions > button { width: 100%; }
+        .answer-option { padding: 13px; }
+    }
+
+
+    /* Mobile-first exam presentation */
+@media (max-width: 700px) {
+    .exam-topline {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        margin: -12px -12px 16px;
+        padding: 18px 16px 20px;
+        color: #fff;
+        background: linear-gradient(145deg, #082747, #12477f);
+        border-radius: 0 0 24px 24px;
+        box-shadow: 0 8px 24px rgba(8, 39, 71, .16);
+    }
+
+    .exam-topline .eyebrow {
+        color: #b9d8ff;
+        font-size: 11px;
+    }
+
+    .exam-title {
+        color: #fff;
+        font-size: 25px;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+    }
+
+    .exam-subtitle {
+        color: #d3e4f8;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-top: 6px;
+    }
+
+    .exam-top-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .stat-chip {
+        min-width: 0;
+        padding: 11px 12px;
+        border: 1px solid rgba(255, 255, 255, .2);
+        border-radius: 15px;
+        color: #fff;
+        background: rgba(255, 255, 255, .12);
+    }
+
+    .stat-label {
+        color: #c7def7;
+        font-size: 10px;
+        letter-spacing: .5px;
+    }
+
+    .stat-value {
+        color: #fff;
+        font-size: 19px;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .timer-chip,
+    .timer-chip.warning {
+        color: #fff;
+        background: rgba(255, 255, 255, .12);
+        border-color: rgba(255, 255, 255, .2);
+    }
+
+    .timer-chip.warning .stat-value {
+        color: #ffd1d1;
+    }
+
+    .exam-progress {
+        height: 5px;
+        margin: 0 0 18px;
+    }
+
+    .exam-progress-fill {
+        background: #2478d4;
+    }
+
+    .exam-layout {
+        display: block;
+        margin: 0;
+    }
+
+    .question-panel {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .question-card {
+        min-height: 0;
+        padding: 18px 15px 24px;
+        border: 1px solid #e5eaf1;
+        border-radius: 22px;
+        background: #fff;
+        box-shadow: 0 5px 22px rgba(15, 39, 71, .06);
+    }
+
+    .question-card-header {
+        align-items: center;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #e8edf4;
+    }
+
+    .question-badge {
+        padding: 9px 12px;
+        border-radius: 11px;
+        font-size: 14px;
+    }
+
+    .question-count {
+        font-size: 12px;
+        text-align: right;
+    }
+
+    .question-text {
+        margin-bottom: 20px;
+        font-size: 19px;
+        font-weight: 650;
+        line-height: 1.65;
+        color: #172536;
+        overflow-wrap: anywhere;
+    }
+
+    .question-image {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        max-height: 42vh;
+        object-fit: contain;
+        margin: 12px auto 20px;
+        border-radius: 12px;
+    }
+
+    .exam-question audio,
+    .answer-content audio {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        margin: 12px 0;
+    }
+
+    .answer-list {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .answer-option {
+        align-items: flex-start;
+        gap: 12px;
+        min-width: 0;
+        min-height: 58px;
+        padding: 16px 14px;
+        border: 1px solid #dce3ed;
+        border-radius: 15px;
+        background: #fff;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .answer-option.selected {
+        padding: 15px 13px;
+        border: 2px solid #1768bd;
+        background: #edf5ff;
+    }
+
+    .answer-option input[type="radio"] {
+        width: 21px;
+        height: 21px;
+        margin-top: 2px;
+        cursor: pointer;
+    }
+
+    .answer-content {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .answer-content img {
+        width: 100%;
+        max-width: 100%;
+        max-height: 260px;
+        object-fit: contain;
+    }
+
+    .save-status {
+        margin-top: 15px;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    /* Keep navigation accessible above the phone's bottom safe area. */
+    .exam-actions {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 60;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        gap: 8px;
+        margin: 0;
+        padding: 12px 12px
+            calc(12px + env(safe-area-inset-bottom));
+        background: rgba(255, 255, 255, .98);
+        border-top: 1px solid #e3e9f1;
+        box-shadow: 0 -7px 24px rgba(12, 36, 65, .09);
+    }
+
+    .exam-actions-group {
+        display: flex;
+        flex: 1 1 auto;
+        width: auto;
+        min-width: 0;
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+
+    .exam-actions-group button {
+        flex: 1 1 0;
+        min-width: 0;
+        min-height: 52px;
+        padding: 11px 8px;
+        border-radius: 14px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .exam-actions > button {
+        flex: 0 0 auto;
+        width: auto;
+        min-width: 76px;
+        min-height: 52px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        font-size: 13px;
+    }
+
+    .exam-actions button:disabled {
+        opacity: .48;
+        cursor: not-allowed;
+    }
+
+.mobile-navigator {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .mobile-navigator {
+        display: block;
+        margin: 0 0 16px;
+    }
+
+    #mobile-navigator-toggle {
+        width: 100%;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 12px 15px;
+        border-radius: 13px;
+    }
+
+    .exam-sidebar {
+        display: none;
+        margin-bottom: 18px;
+    }
+
+    .exam-sidebar.mobile-open {
+        display: block;
+    }
+
+    .exam-sidebar .palette {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .exam-sidebar .palette-button {
+        min-height: 44px;
+    }
+
+    .exam-sidebar .sidebar-submit {
+        margin-top: 16px;
+    }
+
+    .question-card::before {
+        background-size: min(62%, 240px) auto;
+        opacity: .055;
+    }
+}
+
+    /* Prevent the fixed bottom bar from covering question content. */
+    body {
+        padding-bottom: calc(105px + env(safe-area-inset-bottom));
+    }
+
+    .confirm-dialog {
+        max-height: 85dvh;
+        overflow-y: auto;
+        padding: 23px 19px;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    .exam-title {
+        font-size: 22px;
+    }
+
+    .question-card {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .exam-actions {
+        gap: 6px;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    .exam-actions-group {
+        gap: 6px;
+    }
+
+    .exam-actions-group button {
+        padding-right: 5px;
+        padding-left: 5px;
+        font-size: 12px;
+    }
+
+    .exam-actions > button {
+        min-width: 66px;
+        padding-right: 8px;
+        padding-left: 8px;
+        font-size: 12px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="exam-topline">
+    <div>
+        <div class="eyebrow">Examination in progress</div>
+        <h1 class="exam-title">{{ attempt.daily_exam.title }}</h1>
+        <p class="exam-subtitle">Read each question carefully and select one answer.</p>
+        <p class="exam-subtitle" style="font-size:11px;font-weight:700;letter-spacing:.35px;color:#203f70">NIBANGSH EARTH EDUCATIONAL CONSULTANCY PVT. LTD. · CONFIDENTIAL</p>
+    </div>
+
+    <div class="exam-top-stats">
+        <div class="stat-chip">
+            <span class="stat-label">Progress</span>
+            <span class="stat-value"><span id="answered-count">0</span>/{{ questions|length }}</span>
+        </div>
+
+        <div class="stat-chip timer-chip" id="timer-chip">
+            <span class="stat-label">Time remaining</span>
+            <span class="stat-value" id="countdown" role="timer">--:--</span>
+        </div>
+    </div>
+</div>
+
+<div class="exam-progress" aria-label="Exam completion progress">
+    <div class="exam-progress-fill" id="progress-fill"></div>
+</div>
+
+<div class="mobile-navigator">
+    <button
+        type="button"
+        class="secondary-button"
+        id="mobile-navigator-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-question-navigator">
+        Questions <span id="mobile-answered-summary">0/{{ questions|length }} answered</span>
+    </button>
+</div>
+
+<div class="exam-layout">
+    <section class="question-panel">
+        <div class="card question-card">
+            <div class="question-card-header">
+                <span class="question-badge" id="question-badge">Question 1</span>
+                <span class="question-count">Total {{ questions|length }} questions</span>
+            </div>
+
+            <form id="exam-form" method="post"
+                  action="{% url 'submit-exam' attempt_id=attempt.pk %}">
+                {% csrf_token %}
+
+                {% for question in questions %}
+                <section class="exam-question"
+                         data-question-index="{{ forloop.counter0 }}"
+                         data-question-id="{{ question.id }}"
+                         style="display:none">
+
+                    {% if question.text %}
+                    <div class="question-text">{{ question.text|linebreaksbr }}</div>
+                    {% endif %}
+
+                    {% if question.image_url %}
+                    <img class="question-image"
+                         src="{{ question.image_url }}"
+                         alt="Question image"
+                         loading="lazy"
+                         onclick="openQuestionImage(this.src)">
+                    {% endif %}
+
+                    {% if question.audio_url %}
+                    <audio controls preload="none">
+                        <source src="{{ question.audio_url }}">
+                        Your browser does not support audio.
+                    </audio>
+                    {% endif %}
+
+                    <div class="answer-list">
+                        {% for option in question.options %}
+                        <label class="answer-option">
+                            <input type="radio"
+                                   name="question_{{ question.id }}"
+                                   value="{{ option.id }}"
+                                   data-question-id="{{ question.id }}"
+                                   {% if saved_answers|get_item:question.id == option.id %}checked{% endif %}>
+
+                            <span class="answer-content">
+                                {% if option.text %}
+                                    <span>{{ option.text|linebreaksbr }}</span>
+                                {% endif %}
+
+                                {% if option.image_url %}
+                                    <img src="{{ option.image_url }}"
+                                         alt="Answer option image"
+                                         loading="lazy"
+                                         onclick="event.preventDefault(); openQuestionImage(this.src)">
+                                {% endif %}
+
+                                {% if option.audio_url %}
+                                    <audio controls preload="none">
+                                        <source src="{{ option.audio_url }}">
+                                        Your browser does not support audio.
+                                    </audio>
+                                {% endif %}
+                            </span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endfor %}
+            </form>
+
+            <p id="save-status" class="save-status" role="status" aria-live="polite">
+                Your answers are saved automatically.
+            </p>
+
+            <div class="exam-actions">
+                <div class="exam-actions-group">
+                    <button class="secondary-button" type="button" id="previous-button">
+                        ← Previous
+                    </button>
+                    <button class="primary-button" type="button" id="next-button">
+                        Next →
+                    </button>
+                </div>
+
+                <button class="danger-button" type="button" id="finish-button">
+                    Finish exam
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <aside class="exam-sidebar" id="mobile-question-navigator">
+        <div class="card">
+            <div class="sidebar-heading">
+                <h3>Question navigator</h3>
+            </div>
+
+            <p class="sidebar-subtitle">
+                Select a number to jump to that question.
+            </p>
+
+            <div class="palette" id="question-grid">
+                {% for question in questions %}
+                <button type="button"
+                        class="palette-button"
+                        data-index="{{ forloop.counter0 }}"
+                        aria-label="Go to question {{ forloop.counter }}">
+                    {{ forloop.counter }}
+                </button>
+                {% endfor %}
+            </div>
+
+            <div class="palette-legend">
+                <div class="legend-item">
+                    <span class="legend-dot current"></span> Current question
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot answered"></span> Answered
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot"></span> Not answered
+                </div>
+            </div>
+
+            <button class="danger-button sidebar-submit"
+                    type="button" id="sidebar-finish-button">
+                Submit exam
+            </button>
+        </div>
+    </aside>
+</div>
+
+<div class="confirm-overlay" id="confirm-overlay"
+     role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="confirm-dialog">
+        <div class="eyebrow">Review before submitting</div>
+        <h2 id="confirm-title">Finish your exam?</h2>
+        <p id="confirm-message">Check your answers before you submit.</p>
+
+        <div class="confirm-actions">
+            <button class="secondary-button" type="button" id="cancel-submit">
+                Continue exam
+            </button>
+            <button class="danger-button" type="button" id="confirm-submit">
+                Submit now
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="confirm-overlay" id="image-overlay"
+     role="dialog" aria-modal="true" aria-label="Image preview"
+     onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="confirm-dialog" style="max-width:900px;text-align:center">
+        <img id="preview-image" src="" alt="Enlarged question image"
+             style="max-width:100%;max-height:75vh;object-fit:contain">
+        <div class="confirm-actions">
+            <button type="button" class="secondary-button"
+                    onclick="document.getElementById('image-overlay').classList.remove('open')">
+                Close image
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function openQuestionImage(src) {
+    document.getElementById("preview-image").src = src;
+    document.getElementById("image-overlay").classList.add("open");
+}
+
+(function () {
+    const deadlineMs = {{ deadline_ms }};
+    const serverNowMs = {{ server_now_ms }};
+    const clockOffsetMs = serverNowMs - Date.now();
+
+    const form = document.getElementById("exam-form");
+    const sections = Array.from(document.querySelectorAll(".exam-question"));
+    const paletteButtons = Array.from(document.querySelectorAll(".palette-button"));
+    const mobileNavigatorToggle =
+        document.getElementById("mobile-navigator-toggle");
+    const mobileAnsweredSummary =
+        document.getElementById("mobile-answered-summary");
+    const examSidebar = document.getElementById("mobile-question-navigator");
+
+    mobileNavigatorToggle.addEventListener("click", function () {
+        const isOpen = examSidebar.classList.toggle("mobile-open");
+        mobileNavigatorToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    const questionBadge = document.getElementById("question-badge");
+    const countdown = document.getElementById("countdown");
+    const timerChip = document.getElementById("timer-chip");
+    const answeredCount = document.getElementById("answered-count");
+    const progressFill = document.getElementById("progress-fill");
+    const status = document.getElementById("save-status");
+
+    const previousButton = document.getElementById("previous-button");
+    const nextButton = document.getElementById("next-button");
+    const finishButton = document.getElementById("finish-button");
+    const sidebarFinishButton = document.getElementById("sidebar-finish-button");
+
+    const overlay = document.getElementById("confirm-overlay");
+    const confirmMessage = document.getElementById("confirm-message");
+    const cancelSubmit = document.getElementById("cancel-submit");
+    const confirmSubmit = document.getElementById("confirm-submit");
+
+    const saveUrl = "{% url 'save-answer' attempt_id=attempt.pk %}";
+
+    let currentIndex = 0;
+    let submitting = false;
+    let expired = false;
+    let pendingSaves = Promise.resolve();
+
+    function csrfToken() {
+        return form.querySelector('[name="csrfmiddlewaretoken"]').value;
+    }
+
+    function remainingSeconds() {
+        return Math.max(0, Math.floor(
+            (deadlineMs - (Date.now() + clockOffsetMs)) / 1000
+        ));
+    }
+
+    function isAnswered(index) {
+        return !!sections[index]?.querySelector('input[type="radio"]:checked');
+    }
+
+    function updateProgress() {
+        const answered = sections.filter((_, i) => isAnswered(i)).length;
+        answeredCount.textContent = answered;
+        mobileAnsweredSummary.textContent =
+            answered + "/" + sections.length + " answered";
+        progressFill.style.width = sections.length
+            ? (answered / sections.length * 100) + "%"
+            : "0%";
+
+        paletteButtons.forEach((button, index) => {
+            const selected = isAnswered(index);
+            button.classList.toggle("answered", selected);
+            button.classList.toggle("current", index === currentIndex);
+            button.setAttribute("aria-current",
+                index === currentIndex ? "step" : "false");
+            button.setAttribute("aria-label",
+                "Question " + (index + 1) + (selected ? ", answered" : ", unanswered"));
+        });
+    }
+
+    function showQuestion(index) {
+        if (!sections.length) return;
+
+        currentIndex = Math.max(0, Math.min(index, sections.length - 1));
+
+        sections.forEach((section, i) => {
+            section.style.display = i === currentIndex ? "block" : "none";
+        });
+
+        questionBadge.textContent = "Question " + (currentIndex + 1);
+        previousButton.disabled = currentIndex === 0;
+        nextButton.disabled = currentIndex === sections.length - 1;
+
+        updateProgress();
+        if (window.matchMedia("(max-width: 700px)").matches) {
+            examSidebar.classList.remove("mobile-open");
+            mobileNavigatorToggle.setAttribute("aria-expanded", "false");
+        }
+
+    }
+
+    paletteButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            showQuestion(Number(button.dataset.index));
+        });
+    });
+
+    previousButton.addEventListener("click", () => showQuestion(currentIndex - 1));
+    nextButton.addEventListener("click", () => showQuestion(currentIndex + 1));
+
+    function setStatus(message, type) {
+        status.textContent = message;
+        status.classList.toggle("error", type === "error");
+        status.classList.toggle("saved", type === "saved");
+    }
+
+    function saveAnswer(questionId, optionId) {
+        if (submitting || expired || remainingSeconds() <= 0) {
+            return Promise.resolve();
+        }
+
+        setStatus("Saving your answer...", "");
+
+        const request = pendingSaves.then(async function () {
+            if (submitting || expired) return;
+
+            const response = await fetch(saveUrl, {
+                method: "POST",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken()
+                },
+                body: JSON.stringify({
+                    question_id: questionId,
+                    option_id: optionId
+                })
+            });
+
+            if (!response.ok) {
+                let message = "Could not save your answer. Please check your connection.";
+
+                try {
+                    const data = await response.json();
+                    if (data.error) message = data.error;
+                } catch (_) {}
+
+                setStatus(message, "error");
+
+                if (response.status === 409) {
+                    expired = true;
+                    submitExam(true);
+                }
+
+                throw new Error(message);
+            }
+
+            setStatus("Answer saved successfully.", "saved");
+        });
+
+        pendingSaves = request.catch(() => {});
+        return request;
+    }
+
+    document.querySelectorAll('input[type="radio"][data-question-id]').forEach(radio => {
+        radio.addEventListener("change", function () {
+            if (submitting || expired) return;
+
+            const questionSection = radio.closest(".exam-question");
+            const questionIndex = Number(questionSection.dataset.questionIndex);
+
+            questionSection.querySelectorAll(".answer-option").forEach(label => {
+                label.classList.toggle(
+                    "selected",
+                    !!label.querySelector('input[type="radio"]:checked')
+                );
+            });
+
+            updateProgress();
+
+            saveAnswer(radio.dataset.questionId, radio.value).catch(() => {});
+
+            // Keep the student on the current question after selecting an answer.
+            showQuestion(questionIndex);
+        });
+    });
+
+    function renderTime() {
+        const seconds = remainingSeconds();
+        const minutes = Math.floor(seconds / 60);
+        const remainder = seconds % 60;
+
+        countdown.textContent =
+            String(minutes).padStart(2, "0") + ":" +
+            String(remainder).padStart(2, "0");
+
+        timerChip.classList.toggle("warning", seconds <= 300);
+
+        if (seconds <= 0) {
+            expired = true;
+            submitExam(true);
+            return;
+        }
+
+        window.setTimeout(renderTime, 250);
+    }
+
+    function openSubmitDialog() {
+        const answered = sections.filter((_, i) => isAnswered(i)).length;
+        const unanswered = sections.length - answered;
+
+        confirmMessage.textContent = unanswered
+            ? "You have answered " + answered + " of " + sections.length +
+              " questions. " + unanswered +
+              " question(s) remain unanswered. Do you want to submit?"
+            : "You have answered all " + sections.length +
+              " questions. Are you ready to submit your exam?";
+
+        overlay.classList.add("open");
+        confirmSubmit.focus();
+    }
+
+    function submitExam(isAutomatic) {
+        if (submitting) return;
+
+        submitting = true;
+        overlay.classList.remove("open");
+        previousButton.disabled = true;
+        nextButton.disabled = true;
+        finishButton.disabled = true;
+        sidebarFinishButton.disabled = true;
+        confirmSubmit.disabled = true;
+        cancelSubmit.disabled = true;
+
+        setStatus(isAutomatic
+            ? "Time is over. Submitting your exam..."
+            : "Submitting your exam...", "");
+
+        // Wait for queued answer saves to settle before final submission.
+        pendingSaves.finally(function () {
+            HTMLFormElement.prototype.submit.call(form);
+        });
+    }
+
+    finishButton.addEventListener("click", openSubmitDialog);
+    sidebarFinishButton.addEventListener("click", openSubmitDialog);
+
+    cancelSubmit.addEventListener("click", () => {
+        overlay.classList.remove("open");
+        finishButton.focus();
+    });
+
+    confirmSubmit.addEventListener("click", () => submitExam(false));
+
+    overlay.addEventListener("click", event => {
+        if (event.target === overlay) overlay.classList.remove("open");
+    });
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+            overlay.classList.remove("open");
+            document.getElementById("image-overlay").classList.remove("open");
+        }
+    });
+
+    form.addEventListener("submit", function (event) {
+        if (submitting) return;
+        event.preventDefault();
+        openSubmitDialog();
+    });
+
+    // Restore selected answer styling on a resumed attempt.
+    sections.forEach(section => {
+        section.querySelectorAll(".answer-option").forEach(label => {
+            label.classList.toggle(
+                "selected",
+                !!label.querySelector('input[type="radio"]:checked')
+            );
+        });
+    });
+
+    if (!sections.length) {
+        setStatus("No questions are available for this exam.", "error");
+        previousButton.disabled = true;
+        nextButton.disabled = true;
+        finishButton.disabled = true;
+        sidebarFinishButton.disabled = true;
+    } else {
+        showQuestion(0);
+    }
+
+    renderTime();
+})();
+</script>
+
+<script id="exam-capture-deterrents">
+(function () {
+    "use strict";
+
+    // These are browser-level deterrents, not guaranteed screenshot blocking.
+    document.addEventListener("contextmenu", function (event) {
+        if (event.target.closest(".exam-question")) {
+            event.preventDefault();
+        }
+    });
+
+    document.addEventListener("dragstart", function (event) {
+        if (event.target.closest(".exam-question")) {
+            event.preventDefault();
+        }
+    });
+
+    document.addEventListener("keydown", function (event) {
+        const key = (event.key || "").toLowerCase();
+        const command = event.ctrlKey || event.metaKey;
+
+        // Block common browser commands used for printing, saving, and tools.
+        const blocked =
+            key === "printscreen" ||
+            (command && key === "p") ||
+            (command && key === "s") ||
+            (command && key === "u") ||
+            (command && event.shiftKey &&
+                ["i", "j", "c", "s"].includes(key)) ||
+            key === "f12";
+
+        if (blocked) {
+            event.preventDefault();
+            event.stopPropagation();
+            showWarning(
+                "????? ??????? ??????? ????????? ????????? ??? ???????? screenshot ????? ???????"
+            );
+        }
+    }, true);
+
+    const warning = document.createElement("div");
+    warning.id = "exam-capture-warning";
+    warning.setAttribute("role", "status");
+    warning.setAttribute("aria-live", "polite");
+    warning.style.cssText =
+        "display:none;position:fixed;bottom:16px;left:50%;" +
+        "transform:translateX(-50%);z-index:9999;" +
+        "max-width:calc(100% - 32px);padding:12px 18px;" +
+        "border-radius:12px;background:#182746;color:white;" +
+        "box-shadow:0 8px 30px #0003;text-align:center;font-size:14px;";
+    document.body.appendChild(warning);
+
+    let warningTimer;
+
+    function showWarning(message) {
+        warning.textContent = message;
+        warning.style.display = "block";
+        clearTimeout(warningTimer);
+        warningTimer = setTimeout(function () {
+            warning.style.display = "none";
+        }, 5000);
+    }
+
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            showWarning(
+                "????? ??????? ???????? ????? ???????? ????? ????????? ???????????"
+            );
+        }
+    });
+
+    // Discourage selecting/copying text within questions without disabling
+    // radio buttons, answer navigation, or the exam controls.
+    const style = document.createElement("style");
+    style.textContent = `
+        .exam-question .question-text,
+        .exam-question .question-image,
+        .exam-question .answer-content {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .exam-question img {
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+    `;
+    document.head.appendChild(style);
+})();
+
+
+
+
+</script>
+
+{% endblock %}
+
+

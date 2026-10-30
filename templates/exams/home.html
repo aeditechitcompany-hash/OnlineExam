@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard | Nibangsh Online Exam{% endblock %}
+{% block extra_head %}
+<style>
+.dashboard-hero{position:relative;overflow:hidden;padding:clamp(24px,4vw,42px);border-radius:24px;background:linear-gradient(130deg,#142d52,#203f70 68%,#315b91);color:#fff;margin-bottom:24px;box-shadow:0 14px 34px rgba(20,45,82,.16)}
+.dashboard-hero:after{content:"";position:absolute;width:230px;height:230px;right:-55px;top:-75px;border:1px solid rgba(255,255,255,.15);border-radius:50%;box-shadow:0 0 0 25px rgba(255,255,255,.035),0 0 0 55px rgba(255,255,255,.025)}
+.dashboard-hero .eyebrow{color:#c7d9f1}.dashboard-hero h1{max-width:700px;font-size:clamp(27px,4vw,40px);margin-bottom:10px}.dashboard-hero p{color:#e0eafa;max-width:650px;margin:0;line-height:1.7}
+.dashboard-section-title{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:26px 0 15px}.dashboard-section-title h2{margin:0;color:#203f70}.dashboard-date{color:var(--muted);font-size:13px}
+.exam-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:17px}.exam-card{background:#fff;border:1px solid #e2e8f1;border-radius:18px;padding:22px;box-shadow:0 7px 22px rgba(25,48,82,.045);display:flex;flex-direction:column;min-width:0}.exam-card h3{color:#203f70;font-size:19px;margin:0 0 14px}.exam-meta{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:15px}.exam-meta span{background:#f0f4fa;color:#455b78;border-radius:8px;padding:6px 9px;font-size:12px;font-weight:700}.exam-card p{color:#69778c;font-size:14px;line-height:1.6}.exam-card .button,.exam-card .secondary-button{align-self:flex-start;margin-top:auto}.exam-card .button{background:#203f70;border-color:#203f70}.exam-card .button:hover{background:#142d52}.exam-empty{background:#fff;border:1px dashed #cbd5e1;border-radius:18px;padding:35px;text-align:center;color:#68778c}
+@media(max-width:600px){.dashboard-hero{border-radius:18px}.dashboard-section-title{align-items:start;flex-direction:column}.exam-card{padding:19px}}
+</style>
+{% endblock %}
+{% block content %}
+<section class="dashboard-hero">
+    <div class="eyebrow">Nibangsh · Student Portal</div>
+    <h1>Welcome to your Online Examination</h1>
+    <p>Access your scheduled assessments, continue an exam in progress, and review completed results. Please keep your examination details confidential.</p>
+</section>
+<div class="dashboard-section-title">
+    <h2>Today's examinations</h2>
+    <span class="dashboard-date">{{ today|date:"F j, Y" }}</span>
+</div>
+{% if exam_cards %}
+<div class="exam-list">
+    {% for item in exam_cards %}
+    <article class="exam-card">
+        <h3>{{ item.daily_exam.title }}</h3>
+        <div class="exam-meta">
+            <span>{{ item.daily_exam.duration_minutes }} minutes</span>
+            <span>{{ item.daily_exam.total_questions }} questions</span>
+        </div>
+        {% if item.attempt %}
+            {% if item.attempt.is_submitted %}
+                <p>You have completed this examination.</p>
+                <a class="secondary-button" href="{% url 'exam-result' attempt_id=item.attempt.pk %}">View your result</a>
+            {% else %}
+                <p>Your examination is already in progress. Your timer continues from the original start time.</p>
+                <a class="button" href="{% url 'take-exam' attempt_id=item.attempt.pk %}">Continue examination</a>
+            {% endif %}
+        {% else %}
+            <p>You can attempt this examination only once. Your timer starts when you begin.</p>
+            <a class="button" href="{% url 'exam-instructions' exam_id=item.daily_exam.pk %}">Start examination</a>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="exam-empty"><h3>No examinations published today</h3><p>Please check again later or contact Nibangsh support if you need assistance.</p><a class="whatsapp-link" href="https://wa.me/9779851001970" target="_blank" rel="noopener">Contact support on WhatsApp</a></div>
+{% endif %}
+{% endblock %}
